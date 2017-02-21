@@ -14,7 +14,7 @@
             <div class="box-tools pull-right">
                 {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!}
                 {!!csrf_field()!!}
-                <div class="input-group" style="width: 200px;">
+                <div class="input-group" style="width: 300px;">
                     <input type="text" class="form-control" name="search" value="{!! \Input::get('search')!!}">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
@@ -48,7 +48,9 @@
 					<td>{!!$supervisor->jabatan!!}</td>
 					<td>{!!$supervisor->telepon!!}</td>
 					<td>{!!$supervisor->email!!}</td>
-					<td>{!!$supervisor->foto!!}</td>
+					<td>
+                        <img class="thumbnail" src="packages/upload/supervisor/<?php echo $supervisor->foto ?>" style="width:100px; height: 100px;"/>
+                    </td>
 
                         <td>
                         {!! ClaravelHelpers::btnEdit($supervisor->id) !!}
@@ -136,7 +138,11 @@
                         },
                         success:function(html){
                             preloader.off();
-                            notification(html,'success');
+                            if (html=='9') {
+                                notification('Data berhasil dihapus','success');    
+                            }else{
+                                notification(html,'error');    
+                            }
                             $this.closest('tr').fadeOut(300,function(){
                                 $(this).remove();
                             });
@@ -194,7 +200,11 @@
                         },
                         success:function(html){
                             preloader.off();
-                            notification(html,'success');
+                            if (html=='9') {
+                                notification('Data berhasil dihapus','success');    
+                            }else{
+                                notification(html,'error');    
+                            }
                             iki.find('input[type=checkbox]').each(function (t){
                                 if($(this).is(':checked')){
                                     $(this).closest('tr').fadeOut(100)                                        

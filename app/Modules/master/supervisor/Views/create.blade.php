@@ -12,36 +12,36 @@
     <div class="box box-primary">
       <div class="row">
         <div class="col-md-12">
-            {!! Form::open(array('url' => \Request::path(), 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax'),'id'=>'simpan')) !!}
+            {!! Form::open(array('url' => \Request::path(), 'method' => 'POST', 'enctype'=>'multipart/form-data', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax'),'id'=>'simpan')) !!}
             <div class="box-body">
                 				<div class="form-group">
-					{!! Form::label('nm_supervisor', 'Nama Supervisor:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('nm_supervisor', 'Nama Supervisor:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('nm_supervisor', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('jabatan', 'Jabatan:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('jabatan', 'Jabatan:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('jabatan', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('telepon', 'Telp/HP:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('telepon', 'Telp/HP:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('telepon', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('email', 'Email:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('email', 'Email:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('email', null, array('class'=> 'form-control')) !!}
+						{!! Form::email('email', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('foto', 'Foto:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('foto', 'Foto:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('foto', null, array('class'=> 'form-control')) !!}
+                        <input type="file" id="foto" name="foto" class="form-control">
 					</div>
 				</div>
 
@@ -91,22 +91,29 @@
         $('#simpan').on('submit',function(e){
             var $this = $(this);
             e.preventDefault();
+            e.stopImmediatePropagation();
+            var formData = new FormData(this);
+
             bootbox.confirm('Simpan data?',function(a){
                 if (a == true){
                     $.ajax({
                         url : $this.attr('action'),
                         type : 'POST',
-                        data : $this.serialize(),
+                        data : formData,
+                        contentType : false,
+                        processData : false,
                         beforeSend: function(){
                             preloader.on();
                         },
                         success:function(html){
-                            if(html=='1'){
-                                notification('Berhasil Disimpan','success');
-                                refresh_page();
-                            }else{
-                                notification(html,'danger');
-                            }
+                            notification(html,'success');
+                            refresh_page();
+                            // if(html=='1'){
+                            //     notification('Berhasil Disimpan','success');
+                            //     refresh_page();
+                            // }else{
+                            //     notification(html,'danger');
+                            // }
                         }
                     });
                 }

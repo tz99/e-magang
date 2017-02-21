@@ -18,11 +18,11 @@ class SupervisorModel extends Model {
 	protected $table = "ms_supervisor";
 
 	public static $rules = array(
-    		'nm_supervisor' => 'required',
-		'jabatan' => 'required',
-		'telepon' => 'required',
-		'email' => 'required',
-		'foto' => 'required',
+  //   	'nm_supervisor' => 'required',
+		// 'jabatan' => 'required',
+		// 'telepon' => 'required',
+		// 'email' => 'required',
+		// 'foto' => 'required',
 
     );
 

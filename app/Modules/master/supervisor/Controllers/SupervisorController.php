@@ -51,11 +51,41 @@ class SupervisorController extends Controller {
     public function postCreate(){
         cekAjax();
         $input = Input::all();
+        $image = Input::get('foto');
+        unset($input['foto']);
+        unset($input['_token']);
         $validation = \Validator::make($input, SupervisorModel::$rules);
         if ($validation->passes()){
             $input['user_id'] = \Session::get('user_id');
             $input['role_id'] = \Session::get('role_id');
-            echo ($this->supervisor->create($input))?1:"Gagal Disimpan";
+
+            $create = $this->supervisor->create($input);
+            if($create){
+                if (Input::hasFile('foto')){
+                    $img             = \Input::file('foto');
+                    $destinationPath = base_path().'/packages/upload/supervisor/';
+                    $ext             = $img->getClientOriginalExtension();
+                    if(strtolower($ext) == 'jpg' || strtolower($ext) == 'png' || strtolower($ext) == 'jpeg'){
+                        $filename        = uniqid().'_'.time().'.'.$ext;
+                        $uploadSuccess   = $img->move($destinationPath, $filename);
+                        if($uploadSuccess){
+                            chmod($destinationPath.$filename, 0777);
+                            $gambar['foto'] = $filename;
+                            $supervisor = $this->supervisor->find($create->id);
+                            echo ($supervisor->update($gambar))?'Data berhasil disimpan':'0';
+
+                        } else {
+                            echo 'Gagal menyimpan gambar';
+                        }
+                    } else {
+                        echo 'File yang diijinkan harus berekstensi jpg dan png';
+                    }
+                }else{
+                    echo "Kesalahan file foto";
+                }
+            } else {
+                echo 'Gagal menyimpan data';
+            }
         }
         else{
             echo 'Input tidak valid';
@@ -66,7 +96,7 @@ class SupervisorController extends Controller {
 
     //{controller-show}
 
-        public function getEdit($id = false){
+    public function getEdit($id = false){
         cekAjax();
         $id = ($id == false)?Input::get('id'):'';
         $supervisor = $this->supervisor->find($id);
@@ -78,11 +108,46 @@ class SupervisorController extends Controller {
         cekAjax();
         $id = Input::get('id');
         $input = Input::all();
+  
+        unset($input['foto']);
+        unset($input['_token']);
         $validation = \Validator::make($input, SupervisorModel::$rules);
         
         if ($validation->passes()){
-            $supervisor = $this->supervisor->find($id);
-            echo ($supervisor->update($input))?4:"Gagal Disimpan";
+            if (Input::hasFile('foto')){
+                $img             = \Input::file('foto');
+                $destinationPath = base_path().'/packages/upload/supervisor/';
+                $ext             = $img->getClientOriginalExtension();
+                if(strtolower($ext) == 'jpg' || strtolower($ext) == 'png' || strtolower($ext) == 'jpeg'){
+                    $filename        = uniqid().'_'.time().'.'.$ext;
+                    $uploadSuccess   = $img->move($destinationPath, $filename);
+
+                    if($uploadSuccess){
+                        chmod($destinationPath.$filename, 0777);
+                        $data = $this->supervisor->find($id);
+
+                        $old_image = public_path().'/packages/upload/supervisor/'.$data->foto;
+                        $old_image = str_replace('public/', '', $old_image);
+
+                        if($data->foto != ''){
+                            if(\File::exists($old_image)) {
+                                \File::delete($old_image);
+                            }
+                        }
+                        $supervisor = $this->supervisor->find($id);
+                        $input['foto'] = $filename;
+                        echo ($supervisor->update($input))?'Data berhasil disimpan':'0';
+                        // echo $old_image;
+                    } else {
+                        echo 'Gagal menyimpan gambar';
+                    }
+                } else {
+                    echo 'File yang diijinkan harus berekstensi jpg dan png';
+                }
+            } else {
+                $supervisor = $this->supervisor->find($id);
+                echo ($supervisor->update($input))?'Data berhasil disimpan':'0';
+            }        
         }
         else{
             echo 'Input tidak valid';
@@ -91,17 +156,29 @@ class SupervisorController extends Controller {
 
 
 	
-        public function postDelete(){
+    public function postDelete(){
         cekAjax();
         $ids = Input::get('id');
         if (is_array($ids)){
             foreach($ids as $id){
+                $data = $this->supervisor->find($id);
+                if($data->foto != ''){
+                    if(file_exists(base_path().'/packages/upload/supervisor/'.$data->foto)){
+                        unlink(base_path().'/packages/upload/supervisor/'.$data->foto);
+                    }
+                }
                 $this->supervisor->find($id)->delete();
             }
             echo 'Data berhasil dihapus';
         }
         else{
-            echo ($this->supervisor->find($ids)->delete())?9:0;
+            $data = $this->supervisor->find($ids);
+            if($data->foto != ''){
+                if(file_exists(base_path().'/packages/upload/supervisor/'.$data->foto)){
+                    unlink(base_path().'/packages/upload/supervisor/'.$data->foto);
+                }
+            }
+            echo ($this->supervisor->find($ids)->delete())?'Data berhasil dihapus':'0';
         }
     }
 

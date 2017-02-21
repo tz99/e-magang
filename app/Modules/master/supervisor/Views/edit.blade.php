@@ -16,7 +16,7 @@
     ?>
     <div class="row">
       <div class="col-md-8">
-        {!! Form::model($supervisor, array('url' => $uri, 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax') ,'id'=>'simpan')) !!}
+        {!! Form::model($supervisor, array('url' => $uri, 'method' => 'POST','enctype'=>'multipart/form-data', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax') ,'id'=>'simpan')) !!}
         {!! Form::hidden('id') !!}
         <div class="box-body">
             				<div class="form-group">
@@ -46,7 +46,7 @@
 				<div class="form-group">
 					{!! Form::label('foto', 'Foto:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('foto', null, array('class'=> 'form-control')) !!}
+                        <input type="file" name="foto" id="foto">
 					</div>
 				</div>
 
@@ -95,24 +95,31 @@
             refresh_page();
         });
         $('#simpan').on('submit',function(e){
-            var $this = $(this);
+           var $this = $(this);
             e.preventDefault();
+            e.stopImmediatePropagation();
+            var formData = new FormData(this);
+
             bootbox.confirm('Simpan data?',function(a){
                 if (a == true){
                     $.ajax({
                         url : $this.attr('action') + '/edit' ,
                         type : 'POST',
-                        data : $this.serialize(),
+                        data : formData,
+                        contentType : false,
+                        processData : false,
                         beforeSend: function(){
                             preloader.on();
                         },
                         success:function(html){
-                            if(html=='4'){
-                                notification('Berhasil Disimpan','success');
-                                refresh_page();
-                            }else{
-                                notification(html,'danger');
-                            }
+                            notification(html,'success');
+                            refresh_page();
+                            // if(html=='4'){
+                            //     notification('Berhasil Disimpan','success');
+                            //     refresh_page();
+                            // }else{
+                            //     notification(html,'danger');
+                            // }
                         }
                     });
                 }
