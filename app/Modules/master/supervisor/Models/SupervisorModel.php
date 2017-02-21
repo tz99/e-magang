@@ -1,7 +1,7 @@
 <?php namespace App\Modules\master\supervisor\Models;
 use Illuminate\Database\Eloquent\Model;
 
-
+use DB;
 /**
 * Supervisor Model
 * @var Supervisor
@@ -37,5 +37,4 @@ class SupervisorModel extends Model {
 			
 		}
 	}
-
 }

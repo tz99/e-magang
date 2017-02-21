@@ -38,6 +38,18 @@
 						{!! Form::email('email', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
+                <div class="form-group">
+                    {!! Form::label('username', 'Username:', array('class' => 'col-sm-2 control-label')) !!}
+                    <div class="col-sm-7">
+                        <input type="text" name="username" class="form-control" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('password', 'Password:', array('class' => 'col-sm-2 control-label')) !!}
+                    <div class="col-sm-7">
+                        <input type="password" name="password" class="form-control" value="">
+                    </div>
+                </div>
 				<div class="form-group">
 					{!! Form::label('foto', 'Foto:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">

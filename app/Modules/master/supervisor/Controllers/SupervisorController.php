@@ -3,6 +3,9 @@
 use App\Http\Controllers\Controller;
 use App\Modules\master\supervisor\Models\SupervisorModel;
 use Input,View, Request, Form, File;
+use Auth;
+use DB;
+use App\User;
 
 /**
 * Supervisor Controller
@@ -27,12 +30,11 @@ class SupervisorController extends Controller {
             if(strlen(Input::has('search')) > 0){
                 $supervisors = $this->supervisor
                 			->orWhere('nm_supervisor', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('jabatan', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('telepon', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('email', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('foto', 'LIKE', '%'.Input::get('search').'%')
-
-                ->paginate($_ENV['configurations']['list-limit']);
+                			->orWhere('jabatan', 'LIKE', '%'.Input::get('search').'%')
+                			->orWhere('telepon', 'LIKE', '%'.Input::get('search').'%')
+                			->orWhere('email', 'LIKE', '%'.Input::get('search').'%')
+                			->orWhere('foto', 'LIKE', '%'.Input::get('search').'%')
+                            ->paginate($_ENV['configurations']['list-limit']);
             }else{
                 $supervisors = $this->supervisor->all();
             }
@@ -50,7 +52,21 @@ class SupervisorController extends Controller {
 
     public function postCreate(){
         cekAjax();
-        $input = Input::all();
+        $input_users = new User();
+        $input_users->name = Input::get('nm_supervisor');
+        $input_users->username = Input::get('username');
+        $input_users->password = \Hash::make(Input::get('password'));
+        $input_users->email = Input::get('email');
+        $input_users->remember_token = Input::get('_token');
+        $input_users->save();
+
+        $input = array(
+            'nm_supervisor' => Input::get('nm_supervisor'),
+            'jabatan' => Input::get('jabatan'),
+            'telepon' => Input::get('telepon'),
+            'email' => Input::get('email')
+        );
+        
         $image = Input::get('foto');
         unset($input['foto']);
         unset($input['_token']);
@@ -99,16 +115,35 @@ class SupervisorController extends Controller {
     public function getEdit($id = false){
         cekAjax();
         $id = ($id == false)?Input::get('id'):'';
+
         $supervisor = $this->supervisor->find($id);
+        $users = DB::table('users')
+                    ->where('email',  $supervisor->email)
+                    ->get();
         //if (is_null($supervisor)){return \Redirect::to('master/supervisor/index');}
-        return View::make('supervisor::edit', compact('supervisor'));
+        return View::make('supervisor::edit', compact('supervisor','users'));
     }
     
     public function postEdit(){
         cekAjax();
         $id = Input::get('id');
-        $input = Input::all();
-  
+        $password_in = Input::get('password');
+        $data = $this->supervisor->find($id);
+
+        if ($password_in=='') {
+            DB::table('users')->where('email',  $data->email)->update(array('name' => Input::get('nm_supervisor'),'username' => Input::get('username'),'email' =>  Input::get('email')));    
+        }else{
+            DB::table('users')
+            ->where('email',  $data->email)->update(array('name' => Input::get('nm_supervisor'),'username' => Input::get('username'), 'password' => bcrypt(Input::get('password')),'email' =>  Input::get('email')));    
+        }
+        
+        $input = array(
+            'nm_supervisor' => Input::get('nm_supervisor'),
+            'jabatan' => Input::get('jabatan'),
+            'telepon' => Input::get('telepon'),
+            'email' => Input::get('email')
+        );
+        
         unset($input['foto']);
         unset($input['_token']);
         $validation = \Validator::make($input, SupervisorModel::$rules);
@@ -159,6 +194,10 @@ class SupervisorController extends Controller {
     public function postDelete(){
         cekAjax();
         $ids = Input::get('id');
+
+        $data = $this->supervisor->find($ids);
+        DB::table('users')->where('email', $data->email)->delete();
+
         if (is_array($ids)){
             foreach($ids as $id){
                 $data = $this->supervisor->find($id);

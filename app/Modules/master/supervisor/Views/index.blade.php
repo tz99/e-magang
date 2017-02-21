@@ -34,7 +34,7 @@
 					<th>Jabatan</th>
 					<th>Telp/HP</th>
 					<th>Email</th>
-					<th>Foto</th>
+                    <th>Foto</th>
 
                         <th>Act.</th>
                     </tr>
@@ -47,7 +47,7 @@
                         					<td>{!!$supervisor->nm_supervisor!!}</td>
 					<td>{!!$supervisor->jabatan!!}</td>
 					<td>{!!$supervisor->telepon!!}</td>
-					<td>{!!$supervisor->email!!}</td>
+                    <td>{!!$supervisor->email!!}</td>
 					<td>
                         <img class="thumbnail" src="packages/upload/supervisor/<?php echo $supervisor->foto ?>" style="width:100px; height: 100px;"/>
                     </td>
