@@ -35,12 +35,10 @@ class JenismagangModel extends Model {
 		}
 	}
 	public static function list_jenis_magang($nm_var='', $selected=''){
-		
 		$data = DB::table('ms_jenis_magang')
 		            ->get();
-
 		$html = '<select id="'.$nm_var.'" name="'.$nm_var.'" class="form-control">';
-		$html .= '<option value="">Jenis Marang</option>';
+		$html .= '<option value="">Jenis Magang</option>';
 		$no=1;
 		foreach($data as $items){
 			$html .= '<option value='.$items->nama.' '.(($selected==$items->nama)?'selected':'').'>'.$items->nama.'</option>';
