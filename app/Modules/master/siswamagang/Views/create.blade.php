@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('jenjang_pddk', 'Jenjang Pendidikan:', array('class' => 'col-sm-3 control-label')) !!}
+                    {!! Form::label('jenjang_pddk', 'Jenjang Pendidikan:', array('class' => 'col-sm-2 control-label')) !!}
                     <div class="col-sm-7">
                        {!! SiswamagangModel::listJenjang('jenjang_pddk') !!}
                     </div>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('tgl_mulai', 'Tanggal Mulai:', array('class' => 'col-sm-3 control-label')) !!}
+                    {!! Form::label('tgl_mulai', 'Tanggal Mulai:', array('class' => 'col-sm-2 control-label')) !!}
                     <div class="col-sm-7">
                         {!! Form::text('tgl_mulai', null, array('class'=> 'form-control')) !!}
                     </div>
@@ -71,13 +71,19 @@
                 <div class="form-group">
                     {!! Form::label('nm_magang', 'Jenis Magang:', array('class' => 'col-sm-2 control-label')) !!}
                     <div class="col-sm-7">
-                        {!! Form::select('nm_magang', array('1'=> '1'), '1') !!}
+                        {!! JenismagangModel::list_jenis_magang('nm_magang') !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('nm_supervisior', 'Supervisior:', array('class' => 'col-sm-2 control-label')) !!}
                     <div class="col-sm-7">
-                        {!! Form::select('nm_supervisior', array('1'=> '1'), '1') !!}
+                        {!! SupervisorModel::list_supervisor('nm_supervisior') !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('foto', 'Foto:', array('class' => 'col-sm-2 control-label')) !!}
+                    <div class="col-sm-7">
+                        <input type="file" id="foto" name="foto" class="form-control">
                     </div>
                 </div>
 

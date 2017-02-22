@@ -51,7 +51,7 @@ class SiswamagangModel extends Model {
 	      '3' =>'D4',
 	      '4' =>'S1',
 	    );
-	    $html = '<select id="$jenjang_id" name="$jenjang_id" style="width:200px">';
+	    $html = '<select id="$jenjang_id" name="$jenjang_id" class="form-control">';
 	    $html .= '<option value="">Pilih Jenjang</option>';
 	    $no=1;
 	    foreach($jenjang as $jjg){
