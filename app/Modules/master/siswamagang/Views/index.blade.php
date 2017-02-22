@@ -1,10 +1,10 @@
 <section class="content-header">
     <h1>
-        Jenis Izin<small></small>
+        Siswa Magang<small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{!!url()!!}"> Dashboard</a></li>
-        <li class="active">Jenis Izin</li>
+        <li class="active">Siswa Magang</li>
     </ol>
 </section>
 <section class="content">
@@ -14,7 +14,7 @@
             <div class="box-tools pull-right">
                 {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!}
                 {!!csrf_field()!!}
-                <div class="input-group" style="width: 300px;">
+                <div class="input-group" style="width: 200px;">
                     <input type="text" class="form-control" name="search" value="{!! \Input::get('search')!!}">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
@@ -30,24 +30,42 @@
                     <thead class="bg-primary">
                     <tr>
                         <th><input type="checkbox" name="checkall" id="checkall" class="checkall" value="1" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Pilih Semua"></th>
-                        					<th>Nama Izin</th>
-					<th>Keterangan</th>
+                        					<th>Nomor Induk</th>
+					<th>Nama Siswa</th>
+					<th>Asal Sekolah</th>
+					<th>Jenjang Pendidikan</th>
+					<th>Alamat</th>
+					<th>Nomor Telepon</th>
+					<th>Email</th>
+					<th>Tanggal Mulai</th>
+					<th>Tanggal Selesai</th>
+					<th>Jenis Magang</th>
+					<th>Supervisior</th>
 
                         <th>Act.</th>
                     </tr>
                     </thead>   
                     
                     <tbody>
-                    @foreach ($jenisizins as $jenisizin)
+                    @foreach ($siswamagangs as $siswamagang)
                     <tr>
-                        <td><center>{!! ClaravelHelpers::ckDelete($jenisizin->id); !!}</center></td>
-                        					<td>{!!$jenisizin->nm_izin!!}</td>
-					<td>{!!$jenisizin->ket_izin!!}</td>
+                        <td><center>{!! ClaravelHelpers::ckDelete($siswamagang->id); !!}</center></td>
+                        					<td>{!!$siswamagang->no_induk!!}</td>
+					<td>{!!$siswamagang->nm_siswa!!}</td>
+					<td>{!!$siswamagang->asal_sekolah!!}</td>
+					<td>{!!$siswamagang->jenjang_pddk!!}</td>
+					<td>{!!$siswamagang->alamat!!}</td>
+					<td>{!!$siswamagang->no_telp!!}</td>
+					<td>{!!$siswamagang->email!!}</td>
+					<td>{!!$siswamagang->tgl_mulai!!}</td>
+					<td>{!!$siswamagang->tgl_selesai!!}</td>
+					<td>{!!$siswamagang->nm_magang!!}</td>
+					<td>{!!$siswamagang->nm_supervisior!!}</td>
 
                         <td>
-                        {!! ClaravelHelpers::btnEdit($jenisizin->id) !!}
+                        {!! ClaravelHelpers::btnEdit($siswamagang->id) !!}
                         &nbsp;
-                        {!! ClaravelHelpers::btnDelete($jenisizin->id) !!}
+                        {!! ClaravelHelpers::btnDelete($siswamagang->id) !!}
                         </td>
                     </tr>
                     @endforeach
@@ -61,7 +79,7 @@
               {!! ClaravelHelpers::btnDeleteAll() !!}
             </div>
             <div class="col-sm-6">
-              <?php echo $jenisizins->appends(array('search' => Input::get('search')))->render(); ?>
+              <?php echo $siswamagangs->appends(array('search' => Input::get('search')))->render(); ?>
             </div>
           </div>
         </div>
@@ -130,11 +148,7 @@
                         },
                         success:function(html){
                             preloader.off();
-                            if(html=='9'){
-                                notification('Data Berhasil Dihapus','success');
-                            }else{
-                                notification(html,'error');  
-                            }
+                            notification(html,'success');
                             $this.closest('tr').fadeOut(300,function(){
                                 $(this).remove();
                             });
@@ -192,11 +206,7 @@
                         },
                         success:function(html){
                             preloader.off();
-                            if(html=='9'){
-                                notification('Data Berhasil Dihapus','success');
-                            }else{
-                                notification(html,'error');  
-                            }
+                            notification(html,'success');
                             iki.find('input[type=checkbox]').each(function (t){
                                 if($(this).is(':checked')){
                                     $(this).closest('tr').fadeOut(100)                                        
