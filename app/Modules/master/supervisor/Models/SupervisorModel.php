@@ -47,11 +47,19 @@ class SupervisorModel extends Model {
 		$html .= '<option value="">Pilih Supervisor</option>';
 		$no=1;
 		foreach($users as $spr){
-			$html .= '<option value='.$spr->username.' '.(($selected==$spr->username)?'selected':'').'>'.$spr->username.'</option>';
+			$html .= '<option value='.$spr->email.' '.(($selected==$spr->email)?'selected':'').'>'.$spr->username.'</option>';
 			$no++;
 		}		
 		$html .= '</select>';
 		
 		return $html;
+	}
+
+	public static function get_supervisor($email){
+		$data = DB::table('users')
+					->where('email',  $email)
+		            ->first();
+		            
+		return $data->name;
 	}
 }

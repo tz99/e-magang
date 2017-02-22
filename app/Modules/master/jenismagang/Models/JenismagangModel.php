@@ -41,12 +41,20 @@ class JenismagangModel extends Model {
 		$html .= '<option value="">Jenis Magang</option>';
 		$no=1;
 		foreach($data as $items){
-			$html .= '<option value='.$items->nama.' '.(($selected==$items->nama)?'selected':'').'>'.$items->nama.'</option>';
+			$html .= '<option value='.$items->id.' '.(($selected==$items->id)?'selected':'').'>'.$items->nama.'</option>';
 			$no++;
 		}		
 		$html .= '</select>';
 		
 		return $html;
+	}
+
+	public static function get_jenis_magang($id){
+		$data = DB::table('ms_jenis_magang')
+					->where('id',  $id)
+		            ->first();
+
+		return $data->nama;
 	}
 
 }
