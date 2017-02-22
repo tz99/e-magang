@@ -88,6 +88,7 @@
     }
     
     $(document).ready(function(){
+        $('select').select2();
         $('.pagination').addClass('pagination-sm no-margin pull-right');
         $('.checkme,.checkall').on('change',function(){
             if($(this).is(':checked'))

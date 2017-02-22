@@ -96,7 +96,6 @@
         }); 
     }
     $(document).ready(function(){
-        $('select').select2();
         $('#batalkan,#back').on('click',function(e){
             e.preventDefault();
             refresh_page();
