@@ -14,47 +14,44 @@
         <div class="col-md-12">
             {!! Form::open(array('url' => \Request::path(), 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax'),'id'=>'simpan')) !!}
             <div class="box-body">
-                				<div class="form-group">
-					{!! Form::label('no_induk', 'Nomor Induk:', array('class' => 'col-sm-3 control-label')) !!}
+                <div class="form-group">
+					{!! Form::label('no_induk', 'Nomor Induk:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('no_induk', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('nm_siswa', 'Nama Siswa:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('nm_siswa', 'Nama Siswa:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('nm_siswa', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('asal_sekolah', 'Asal Sekolah:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('asal_sekolah', 'Asal Sekolah:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('asal_sekolah', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
-
-
 				<div class="form-group">
 					{!! Form::label('jenjang_pddk', 'Jenjang Pendidikan:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-					   <?php echo $this->SiswamagangModels->getJenjang('input_jenjang_jenis_jenjang');?>
-                        <span class='help-inline'><?php echo form_error('jenjang_pddk'); ?></span>
+					   {!! SiswamagangModel::listJenjang('jenjang_pddk') !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('alamat', 'Alamat:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('alamat', 'Alamat:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('alamat', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('no_telp', 'Nomor Telepon:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('no_telp', 'Nomor Telepon:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('no_telp', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('email', 'Email:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('email', 'Email:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('email', null, array('class'=> 'form-control')) !!}
 					</div>
@@ -66,19 +63,19 @@
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('tgl_selesai', 'Tanggal Selesai:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('tgl_selesai', 'Tanggal Selesai:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('tgl_selesai', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('nm_magang', 'Jenis Magang:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('nm_magang', 'Jenis Magang:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::select('nm_magang', array('1'=> '1'), '1') !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('nm_supervisior', 'Supervisior:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('nm_supervisior', 'Supervisior:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::select('nm_supervisior', array('1'=> '1'), '1') !!}
 					</div>
@@ -123,6 +120,7 @@
         }); 
     }
     $(document).ready(function(){
+        $('select').select2();
         $('#batalkan,#back').on('click',function(e){
             e.preventDefault();
             refresh_page();
