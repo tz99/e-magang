@@ -42,8 +42,18 @@
                     <tr>
                         <td><center>{!! ClaravelHelpers::ckDelete($pengumuman->id); !!}</center></td>
                         					<td>{!!$pengumuman->isi_pengumuman!!}</td>
-					<td>{!!$pengumuman->pub_pengumuman!!}</td>
-
+					<td>
+                        <?php 
+                            $publish="$pengumuman->pub_pengumuman";
+                            if ($publish==1) {
+                                echo "Tidak Dipublish";
+                            }
+                            else
+                            {
+                                echo "Publish";
+                            }
+                         ?>
+                    </td>
                         <td>
                         {!! ClaravelHelpers::btnEdit($pengumuman->id) !!}
                         &nbsp;
