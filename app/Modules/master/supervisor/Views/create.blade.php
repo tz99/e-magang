@@ -14,7 +14,7 @@
         <div class="col-md-12">
             {!! Form::open(array('url' => \Request::path(), 'method' => 'POST', 'enctype'=>'multipart/form-data', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax'),'id'=>'simpan')) !!}
             <div class="box-body">
-                				<div class="form-group">
+                <div class="form-group">
 					{!! Form::label('nm_supervisor', 'Nama Supervisor:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('nm_supervisor', null, array('class'=> 'form-control')) !!}
@@ -41,7 +41,7 @@
                 <div class="form-group">
                     {!! Form::label('username', 'Username:', array('class' => 'col-sm-2 control-label')) !!}
                     <div class="col-sm-7">
-                        <input type="text" name="username" class="form-control" value="">
+                        {!! Form::text('username', null, array('class'=> 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -96,6 +96,7 @@
         }); 
     }
     $(document).ready(function(){
+        $('select').select2();
         $('#batalkan,#back').on('click',function(e){
             e.preventDefault();
             refresh_page();

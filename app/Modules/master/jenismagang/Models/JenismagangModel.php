@@ -1,7 +1,7 @@
 <?php namespace App\Modules\master\jenismagang\Models;
 use Illuminate\Database\Eloquent\Model;
 
-
+use DB;
 /**
 * Jenismagang Model
 * @var Jenismagang
@@ -33,6 +33,22 @@ class JenismagangModel extends Model {
 			->paginate($_ENV['configurations']['list-limit']);	
 			
 		}
+	}
+	public static function list_jenis_magang($nm_var='', $selected=''){
+		
+		$data = DB::table('ms_jenis_magang')
+		            ->get();
+
+		$html = '<select id="'.$nm_var.'" name="'.$nm_var.'" class="form-control">';
+		$html .= '<option value="">Jenis Marang</option>';
+		$no=1;
+		foreach($data as $items){
+			$html .= '<option value='.$items->nama.' '.(($selected==$items->nama)?'selected':'').'>'.$items->nama.'</option>';
+			$no++;
+		}		
+		$html .= '</select>';
+		
+		return $html;
 	}
 
 }

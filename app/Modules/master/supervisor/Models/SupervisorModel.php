@@ -38,7 +38,20 @@ class SupervisorModel extends Model {
 		}
 	}
 
-	public function cek(){
-		return "cek";
+	public static function list_supervisor($nm_var='', $selected=''){
+		
+		$users = DB::table('users')
+		            ->get();
+
+		$html = '<select id="'.$nm_var.'" name="'.$nm_var.'" class="form-control">';
+		$html .= '<option value="">Pilih Supervisor</option>';
+		$no=1;
+		foreach($users as $spr){
+			$html .= '<option value='.$spr->username.' '.(($selected==$spr->username)?'selected':'').'>'.$spr->username.'</option>';
+			$no++;
+		}		
+		$html .= '</select>';
+		
+		return $html;
 	}
 }
