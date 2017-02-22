@@ -58,6 +58,7 @@ class SupervisorController extends Controller {
         $input_users->password = \Hash::make(Input::get('password'));
         $input_users->email = Input::get('email');
         $input_users->remember_token = Input::get('_token');
+        $input_users->role_id = 1;
         $input_users->save();
 
         $input = array(
@@ -130,6 +131,7 @@ class SupervisorController extends Controller {
         $password_in = Input::get('password');
         $data = $this->supervisor->find($id);
 
+        //update ke tabel users
         if ($password_in=='') {
             DB::table('users')->where('email',  $data->email)->update(array('name' => Input::get('nm_supervisor'),'username' => Input::get('username'),'email' =>  Input::get('email')));    
         }else{

@@ -37,4 +37,8 @@ class SupervisorModel extends Model {
 			
 		}
 	}
+
+	public function cek(){
+		return "cek";
+	}
 }
