@@ -18,8 +18,7 @@ class PengumumanModel extends Model {
 	protected $table = "ms_pengumuman";
 
 	public static $rules = array(
-    		'isi_pengumuman' => 'required',
-		'pub_pengumuman' => 'required',
+    	'isi_pengumuman' => 'required',
 
     );
 

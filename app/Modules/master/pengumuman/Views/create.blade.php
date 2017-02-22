@@ -17,13 +17,16 @@
                 				<div class="form-group">
 					{!! Form::label('isi_pengumuman', 'Isi Pengumuman:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('isi_pengumuman', null, array('class'=> 'form-control')) !!}
-					</div>
+						<textarea name="isi_pengumuman" class="form-control"></textarea>
+                    </div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('pub_pengumuman', 'Publish:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('pub_pengumuman', null, array('class'=> 'form-control')) !!}
+                        <select name="pub_pengumuman">
+                            <option value="0">Publish</option>
+                            <option value="1">TIdak Publish</option>
+                        </select>
 					</div>
 				</div>
 
