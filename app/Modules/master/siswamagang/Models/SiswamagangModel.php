@@ -44,24 +44,18 @@ class SiswamagangModel extends Model {
 		}
 	}
 
-	public function getJenjang($izin_id='', $selected=''){
-		/*$array = [
-		    ['jenjang' => ['id' => 1, 'nm_jenjang' => 'SMK']],
-		    ['jenjang' => ['id' => 2, 'nm_jenjang' => 'D3']],
-		    ['jenjang' => ['id' => 3, 'nm_jenjang' => 'D4']],
-		    ['jenjang' => ['id' => 4, 'nm_jenjang' => 'Strata 1']],
-		];*/
+	public static function listJenjang($izin_id='', $selected=''){
 		$jenjang = array (
 			'1' =>'SMK',
 			'2' =>'D3',
 			'3' =>'D4',
-			'4' =>'Strata I',
+			'4' =>'S1',
 		);
-		$html = '<select id="jenjang_pddk" name="jenjang_pddk">';
-		$html .= '<option value="">Pilih Jenis Izin</option>';
+		$html = '<select id="$izin_id" name="$izin_id" style="width:200px">';
+		$html .= '<option value="">Pilih Jenjang</option>';
 		$no=1;
 		foreach($jenjang as $jjg){
-			$html .= '<option value='.$jenjang[$jjg->$no].'>'.$jenjang[$jjg->$no].'</option>';
+			$html .= '<option value='.$no.' '.(($selected==$no)?'selected':'').'>'.$jjg.'</option>';
 		$no++;	
 		}		
 		$html .= '</select>';		

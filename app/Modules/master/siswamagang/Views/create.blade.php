@@ -15,7 +15,7 @@
             {!! Form::open(array('url' => \Request::path(), 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax'),'id'=>'simpan')) !!}
             <div class="box-body">
                 				<div class="form-group">
-					{!! Form::label('no_induk', 'Nomor Induk:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('no_induk', 'Nomor Induk:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('no_induk', null, array('class'=> 'form-control')) !!}
 					</div>
@@ -37,8 +37,7 @@
 				<div class="form-group">
 					{!! Form::label('jenjang_pddk', 'Jenjang Pendidikan:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-					   <?php echo $this->SiswamagangModels->getJenjang('input_jenjang_jenis_jenjang');?>
-                        <span class='help-inline'><?php echo form_error('jenjang_pddk'); ?></span>
+					   {!! SiswamagangModel::listJenjang('jenjang_pddk') !!}
 					</div>
 				</div>
 				<div class="form-group">
@@ -123,6 +122,7 @@
         }); 
     }
     $(document).ready(function(){
+        $('select').select2();
         $('#batalkan,#back').on('click',function(e){
             e.preventDefault();
             refresh_page();
