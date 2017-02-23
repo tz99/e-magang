@@ -144,7 +144,11 @@
                         },
                         success:function(html){
                             preloader.off();
-                            notification(html,'success');
+                            if (html=='9') {
+                                notification('Data berhasil dihapus','success');    
+                            }else{
+                                notification(html,'success');    
+                            }
                             $this.closest('tr').fadeOut(300,function(){
                                 $(this).remove();
                             });
@@ -202,7 +206,11 @@
                         },
                         success:function(html){
                             preloader.off();
-                            notification(html,'success');
+                            if (html=='9') {
+                                notification('Data berhasil dihapus','success');    
+                            }else{
+                                notification(html,'success');    
+                            }
                             iki.find('input[type=checkbox]').each(function (t){
                                 if($(this).is(':checked')){
                                     $(this).closest('tr').fadeOut(100)                                        
