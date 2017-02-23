@@ -49,15 +49,38 @@
 				<div class="form-group">
 					{!! Form::label('verifikator', 'Verifikator:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-                        {!! SupervisorModel::list_supervisor('verifikator') !!}
+                        {!! \SupervisorModel::list_supervisor('verifikator', $logaktivitas->verifikator) !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('waktu_verifikasi', 'Waktu verifikasi:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-                        <!-- <input type="datetime-local" name="waktu_verifikasi" id="waktu_verifikasi"  class="form-control"/> -->
                         <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' name="waktu_verifikasi" class="form-control" id="waktu_verifikasi" />
+                            <?php foreach ($data as $itemslog) {
+                            $log = $itemslog->waktu_verifikasi;
+                            $ex_waktu = explode(' ', $log);
+                                $date = $ex_waktu[0];
+                                $time = $ex_waktu[1];
+
+                                $ex_date = explode('-', $date);
+                                    $Y = $ex_date[0];
+                                    $m = $ex_date[1];
+                                    $d = $ex_date[2];
+
+                                $ex_time = explode(':', $time);
+                                    $H = $ex_time[0];
+                                    $i = $ex_time[1];
+
+                                if ($H >12) {
+                                    $H   = $H-12;
+                                    $apm = 'PM'; 
+                                }else{
+                                    $apm = 'AM';
+                                }
+                            
+                            $waktu = $m."/".$d."/".$Y." ".$H.":".$i." ".$apm;
+                            } ?>
+                            <input type='text' name="waktu_verifikasi" value="<?php echo $waktu ?>" class="form-control" id="waktu_verifikasi" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
