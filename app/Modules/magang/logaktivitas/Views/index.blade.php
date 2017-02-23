@@ -45,7 +45,7 @@
                     @foreach ($logaktivitass as $logaktivitas)
                     <tr>
                         <td><center>{!! ClaravelHelpers::ckDelete($logaktivitas->id); !!}</center></td>
-                        					<td>{!!$logaktivitas->siswa!!}</td>
+                        <td>{!! SiswamagangModel::get_nama_siswa($logaktivitas->siswa) !!}</td>
 					<td><?php echo date('d F Y', strtotime($logaktivitas->tanggal)); ?></td>
 					<td>{!!$logaktivitas->aktivitas!!}</td>
 					<td><?php  

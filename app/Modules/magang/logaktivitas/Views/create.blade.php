@@ -17,10 +17,10 @@
         <div class="col-md-12">
             {!! Form::open(array('url' => \Request::path(), 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax'),'id'=>'simpan')) !!}
             <div class="box-body">
-                				<div class="form-group">
+                <div class="form-group">
 					{!! Form::label('siswa', 'Siswa:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('siswa', null, array('class'=> 'form-control')) !!}
+                        {!! SiswamagangModel::list_nama_siswa('siswa') !!}
 					</div>
 				</div>
 				<div class="form-group">
