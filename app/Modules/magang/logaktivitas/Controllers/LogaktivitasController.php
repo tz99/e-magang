@@ -100,9 +100,6 @@ class LogaktivitasController extends Controller {
         $id = ($id == false)?Input::get('id'):'';
         $logaktivitas = $this->logaktivitas->find($id);
 
-        $users = DB::table('users')
-                    ->where('email',  $logaktivitas->email)
-                    ->get();
         //if (is_null($logaktivitas)){return \Redirect::to('magang/logaktivitas/index');}
         return View::make('logaktivitas::edit', compact('logaktivitas'));
     }

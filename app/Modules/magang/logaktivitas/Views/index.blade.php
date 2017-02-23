@@ -55,7 +55,8 @@
                             <span class="label label-danger" style="font-size:90%">Belum</span><?php
                         }?>
                     </td>
-					<td>{!!$logaktivitas->verifikator!!}</td>
+					<td>{!! SupervisorModel::get_supervisor($logaktivitas->verifikator) !!}
+                    </td>
                     <td><?php echo date('d F Y (H:i)', strtotime($logaktivitas->waktu_verifikasi)); ?></td>
                     <td>
                     {!! ClaravelHelpers::btnEdit($logaktivitas->id) !!}

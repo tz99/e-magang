@@ -40,14 +40,14 @@ class SupervisorModel extends Model {
 
 	public static function list_supervisor($nm_var='', $selected=''){
 		
-		$users = DB::table('users')
+		$users = DB::table('ms_supervisor')
 		            ->get();
 
 		$html = '<select id="'.$nm_var.'" name="'.$nm_var.'" class="form-control">';
 		$html .= '<option value="">Pilih Supervisor</option>';
 		$no=1;
 		foreach($users as $spr){
-			$html .= '<option value='.$spr->email.' '.(($selected==$spr->email)?'selected':'').'>'.$spr->username.'</option>';
+			$html .= '<option value='.$spr->id.' '.(($selected==$spr->id)?'selected':'').'>'.$spr->username.'</option>';
 			$no++;
 		}		
 		$html .= '</select>';
@@ -55,11 +55,11 @@ class SupervisorModel extends Model {
 		return $html;
 	}
 
-	public static function get_supervisor($email){
-		$data = DB::table('users')
-					->where('email',  $email)
+	public static function get_supervisor($id){
+		$data = DB::table('ms_supervisor')
+					->where('id',  $id)
 		            ->first();
 		            
-		return $data->name;
+		return ($data)?$data->nm_supervisor:'';
 	}
 }
