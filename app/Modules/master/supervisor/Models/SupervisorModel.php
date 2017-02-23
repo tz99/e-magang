@@ -47,7 +47,7 @@ class SupervisorModel extends Model {
 		$html .= '<option value="">Pilih Supervisor</option>';
 		$no=1;
 		foreach($users as $spr){
-			$html .= '<option value='.$spr->id.' '.(($selected==$spr->id)?'selected':'').'>'.$spr->username.'</option>';
+			$html .= '<option value='.$spr->id.' '.(($selected==$spr->id)?'selected':'').'>'.$spr->nm_supervisor.'</option>';
 			$no++;
 		}		
 		$html .= '</select>';
