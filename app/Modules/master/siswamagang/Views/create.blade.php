@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?php echo asset('packages/tugumuda/css/BeatPicker.min.css'); ?>">
+<script src="<?php echo asset('packages/tugumuda/js/BeatPicker.min.js'); ?>"></script>
 <section class="content-header">
     <h1>
         Buat Siswa Magang Baru<small></small>
@@ -12,7 +14,7 @@
     <div class="box box-primary">
       <div class="row">
         <div class="col-md-12">
-            {!! Form::open(array('url' => \Request::path(), 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax'),'id'=>'simpan')) !!}
+            {!! Form::open(array('url' => \Request::path(), 'method' => 'POST', 'enctype'=>'multipart/form-data', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax'),'id'=>'simpan')) !!}
             <div class="box-body">
                 <div class="form-group">
                     {!! Form::label('no_induk', 'Nomor Induk:', array('class' => 'col-sm-2 control-label')) !!}
@@ -53,19 +55,19 @@
                 <div class="form-group">
                     {!! Form::label('email', 'Email:', array('class' => 'col-sm-2 control-label')) !!}
                     <div class="col-sm-7">
-                        {!! Form::text('email', null, array('class'=> 'form-control')) !!}
+                        {!! Form::email('email', null, array('class'=> 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('tgl_mulai', 'Tanggal Mulai:', array('class' => 'col-sm-2 control-label')) !!}
                     <div class="col-sm-7">
-                        {!! Form::text('tgl_mulai', null, array('class'=> 'form-control')) !!}
+                        {!! Form::text('tgl_mulai', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('tgl_selesai', 'Tanggal Selesai:', array('class' => 'col-sm-2 control-label')) !!}
                     <div class="col-sm-7">
-                        {!! Form::text('tgl_selesai', null, array('class'=> 'form-control')) !!}
+                        {!! Form::text('tgl_selesai', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -86,7 +88,6 @@
                         <input type="file" id="foto" name="foto" class="form-control">
                     </div>
                 </div>
-
             </div>
             <div class="box-footer">
                 <div class="form-group">
@@ -134,22 +135,29 @@
         $('#simpan').on('submit',function(e){
             var $this = $(this);
             e.preventDefault();
+            e.stopImmediatePropagation();
+            var formData = new FormData(this);
+            
             bootbox.confirm('Simpan data?',function(a){
                 if (a == true){
                     $.ajax({
                         url : $this.attr('action'),
                         type : 'POST',
-                        data : $this.serialize(),
+                        data : formData,
+                        contentType : false,
+                        processData : false,
                         beforeSend: function(){
                             preloader.on();
                         },
                         success:function(html){
-                            if(html=='1'){
+                            notification(html,'success');
+                            refresh_page();
+                            /*if(html=='1'){
                                 notification('Berhasil Disimpan','success');
                                 refresh_page();
                             }else{
                                 notification(html,'danger');
-                            }
+                            }*/
                         }
                     });
                 }

@@ -14,7 +14,7 @@
             <div class="box-tools pull-right">
                 {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!}
                 {!!csrf_field()!!}
-                <div class="input-group" style="width: 200px;">
+                <div class="input-group" style="width: 300px;">
                     <input type="text" class="form-control" name="search" value="{!! \Input::get('search')!!}">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
@@ -30,7 +30,7 @@
                     <thead class="bg-primary">
                     <tr>
                         <th><input type="checkbox" name="checkall" id="checkall" class="checkall" value="1" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Pilih Semua"></th>
-                        					<th>Nomor Induk</th>
+                    <th>Nomor Induk</th>
 					<th>Nama Siswa</th>
 					<th>Asal Sekolah</th>
 					<th>Jenjang Pendidikan</th>
@@ -41,6 +41,7 @@
 					<th>Tanggal Selesai</th>
 					<th>Jenis Magang</th>
 					<th>Supervisior</th>
+                    <th>Foto</th>
 
                         <th>Act.</th>
                     </tr>
@@ -50,17 +51,30 @@
                     @foreach ($siswamagangs as $siswamagang)
                     <tr>
                         <td><center>{!! ClaravelHelpers::ckDelete($siswamagang->id); !!}</center></td>
-                        					<td>{!!$siswamagang->no_induk!!}</td>
+                    <td>{!!$siswamagang->no_induk!!}</td>
 					<td>{!!$siswamagang->nm_siswa!!}</td>
 					<td>{!!$siswamagang->asal_sekolah!!}</td>
-					<td>{!!$siswamagang->jenjang_pddk!!}</td>
+                    @if ($siswamagang->jenjang_pddk == 1)
+                        <td>SMK</td>
+                    @elseif ($siswamagang->jenjang_pddk == 2)
+                        <td>D3</td>
+                    @elseif ($siswamagang->jenjang_pddk == 3)
+                        <td>D4</td>
+                    @else
+                        <td>S1</td>
+                    @endif                    
+					<!-- <td>{!!$siswamagang->jenjang_pddk!!}</td> -->
 					<td>{!!$siswamagang->alamat!!}</td>
 					<td>{!!$siswamagang->no_telp!!}</td>
 					<td>{!!$siswamagang->email!!}</td>
 					<td>{!!$siswamagang->tgl_mulai!!}</td>
 					<td>{!!$siswamagang->tgl_selesai!!}</td>
-					<td>{!!$siswamagang->nm_magang!!}</td>
-					<td>{!!$siswamagang->nm_supervisior!!}</td>
+					<td>{!! JenismagangModel::get_jenis_magang($siswamagang->nm_magang) !!}</td>
+					<td>{!! SupervisorModel::get_supervisor($siswamagang->nm_supervisior) !!}</td>
+
+                    <td>
+                        <img class="thumbnail" src="packages/upload/siswamagang/<?php echo $siswamagang->foto ?>" style="width:100px; height: 100px;"/>
+                    </td>
 
                         <td>
                         {!! ClaravelHelpers::btnEdit($siswamagang->id) !!}

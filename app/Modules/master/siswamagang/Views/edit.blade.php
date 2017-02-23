@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?php echo asset('packages/tugumuda/css/BeatPicker.min.css'); ?>">
+<script src="<?php echo asset('packages/tugumuda/js/BeatPicker.min.js'); ?>"></script>
 <section class="content-header">
     <h1>
         Edit Siswa Magang<small></small>
@@ -16,10 +18,10 @@
     ?>
     <div class="row">
       <div class="col-md-8">
-        {!! Form::model($siswamagang, array('url' => $uri, 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax') ,'id'=>'simpan')) !!}
+        {!! Form::model($siswamagang, array('url' => $uri, 'method' => 'POST', 'enctype'=>'multipart/form-data', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax') ,'id'=>'simpan')) !!}
         {!! Form::hidden('id') !!}
         <div class="box-body">
-            				<div class="form-group">
+            	<div class="form-group">
 					{!! Form::label('no_induk', 'Nomor Induk:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('no_induk', null, array('class'=> 'form-control')) !!}
@@ -40,7 +42,7 @@
 				<div class="form-group">
 					{!! Form::label('jenjang_pddk', 'Jenjang Pendidikan:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::select('jenjang_pddk', array('1'=> '1'), '1') !!}
+						{!! SiswamagangModel::listJenjang('jenjang_pddk',$siswamagang->jenjang_pddk) !!}
 					</div>
 				</div>
 				<div class="form-group">
@@ -64,27 +66,33 @@
 				<div class="form-group">
 					{!! Form::label('tgl_mulai', 'Tanggal Mulai:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('tgl_mulai', null, array('class'=> 'form-control')) !!}
+						{!! Form::text('tgl_mulai', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('tgl_selesai', 'Tanggal Selesai:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('tgl_selesai', null, array('class'=> 'form-control')) !!}
+						{!! Form::text('tgl_selesai', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('nm_magang', 'Jenis Magang:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::select('nm_magang', array('1'=> '1'), '1') !!}
+						{!! JenismagangModel::list_jenis_magang('nm_magang',$siswamagang->nm_magang) !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('nm_supervisior', 'Supervisior:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::select('nm_supervisior', array('1'=> '1'), '1') !!}
+						 {!! SupervisorModel::list_supervisor('nm_supervisior',$siswamagang->nm_supervisior) !!}
 					</div>
 				</div>
+                <div class="form-group">
+                    {!! Form::label('foto', 'Foto:', array('class' => 'col-sm-3 control-label')) !!}
+                    <div class="col-sm-7">
+                        <input type="file" name="foto" id="foto" class="form-control">
+                    </div>
+                </div>
 
         </div>
         <div class="box-footer">
@@ -126,6 +134,7 @@
              
     }
     $(document).ready(function(){
+        $('select').select2();
         $('#batalkan,#back').on('click',function(e){
             e.preventDefault();
             refresh_page();
@@ -133,22 +142,29 @@
         $('#simpan').on('submit',function(e){
             var $this = $(this);
             e.preventDefault();
+            e.stopImmediatePropagation();
+            var formData = new FormData(this);
+
             bootbox.confirm('Simpan data?',function(a){
                 if (a == true){
                     $.ajax({
                         url : $this.attr('action') + '/edit' ,
                         type : 'POST',
-                        data : $this.serialize(),
+                        data : formData,
+                        contentType : false,
+                        processData : false,
                         beforeSend: function(){
                             preloader.on();
                         },
                         success:function(html){
-                            if(html=='4'){
+                            notification(html,'success');
+                            refresh_page();
+                            /*if(html=='4'){
                                 notification('Berhasil Disimpan','success');
                                 refresh_page();
                             }else{
                                 notification(html,'danger');
-                            }
+                            }*/
                         }
                     });
                 }
