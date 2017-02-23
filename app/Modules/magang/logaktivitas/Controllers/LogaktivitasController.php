@@ -51,7 +51,35 @@ class LogaktivitasController extends Controller {
 
     public function postCreate(){
         cekAjax();
-        $input = Input::all();
+
+        $get_waktu = Input::get('waktu_verifikasi');
+        $ex_waktu = explode(' ', $get_waktu);
+            $date = $ex_waktu[0];
+            $time = $ex_waktu[1];
+            $apm  = $ex_waktu[2];
+
+            $ex_date = explode('/', $date);
+                $d = $ex_date[1];
+                $m = $ex_date[0];
+                $Y = $ex_date[2];
+
+            $ex_time = explode(':', $time);
+                $H = $ex_time[0];
+                $i = $ex_time[1];
+
+            if ($apm == 'PM') {
+                $H = $H+12;
+            }
+        
+        $waktu = "$Y-$m-$d $H:$i";
+        $input = array(
+            'siswa' => Input::get('siswa'),
+            'tanggal' => Input::get('tanggal'),
+            'aktivitas' => Input::get('aktivitas'),
+            'verifikasi' => Input::get('verifikasi'),
+            'verifikator' => Input::get('verifikator'),
+            'waktu_verifikasi' => $waktu
+        );
         $validation = \Validator::make($input, LogaktivitasModel::$rules);
         if ($validation->passes()){
             $input['user_id'] = \Session::get('user_id');
@@ -71,6 +99,10 @@ class LogaktivitasController extends Controller {
         cekAjax();
         $id = ($id == false)?Input::get('id'):'';
         $logaktivitas = $this->logaktivitas->find($id);
+
+        $users = DB::table('users')
+                    ->where('email',  $logaktivitas->email)
+                    ->get();
         //if (is_null($logaktivitas)){return \Redirect::to('magang/logaktivitas/index');}
         return View::make('logaktivitas::edit', compact('logaktivitas'));
     }

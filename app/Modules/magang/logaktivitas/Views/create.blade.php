@@ -1,3 +1,6 @@
+<!-- input type date -->
+<link rel="stylesheet" href="<?php echo asset('packages/tugumuda/css/BeatPicker.min.css'); ?>">
+<script src="<?php echo asset('packages/tugumuda/js/BeatPicker.min.js'); ?>"></script>
 <section class="content-header">
     <h1>
         Buat Log Aktivitas Baru<small></small>
@@ -23,7 +26,7 @@
 				<div class="form-group">
 					{!! Form::label('tanggal', 'Tanggal:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
-                        <input type="date" name="tanggal" class="form-control">
+                        {!! Form::text('tanggal', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
 					</div>
 				</div>
 				<div class="form-group">
@@ -41,13 +44,18 @@
 				<div class="form-group">
 					{!! Form::label('verifikator', 'Verifikator:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('verifikator', null, array('class'=> 'form-control')) !!}
+                        {!! SupervisorModel::list_supervisor('verifikator') !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('waktu_verifikasi', 'Waktu verifikasi:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
-                        <input type="date" name="waktu_verifikasi" class="form-control">
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type='text' name="waktu_verifikasi" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
 					</div>
 				</div>
 
@@ -90,6 +98,8 @@
         }); 
     }
     $(document).ready(function(){
+        $('select').select2();
+        $('#datetimepicker1').datetimepicker();
         $('#batalkan,#back').on('click',function(e){
             e.preventDefault();
             refresh_page();

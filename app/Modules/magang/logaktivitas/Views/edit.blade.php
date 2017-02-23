@@ -1,11 +1,14 @@
+<!-- input type date -->
+<link rel="stylesheet" href="<?php echo asset('packages/tugumuda/css/BeatPicker.min.css'); ?>">
+<script src="<?php echo asset('packages/tugumuda/js/BeatPicker.min.js'); ?>"></script>
 <section class="content-header">
     <h1>
-        Edit Logaktivitas<small></small>
+        Edit Log Aktivitas<small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{!!url()!!}"> Dashboard</a></li>
-        <li><a href="#" id="back"> Logaktivitas</a></li>
-        <li class="active">Edit Logaktivitas</li>
+        <li><a href="#" id="back"> Log Aktivitas</a></li>
+        <li class="active">Edit Log Aktivitas</li>
     </ol>
 </section>
 <section class="content">
@@ -28,7 +31,7 @@
 				<div class="form-group">
 					{!! Form::label('tanggal', 'Tanggal:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('tanggal', null, array('class'=> 'form-control')) !!}
+						{!! Form::text('tanggal', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
 					</div>
 				</div>
 				<div class="form-group">
@@ -39,20 +42,26 @@
 				</div>
 				<div class="form-group">
 					{!! Form::label('verifikasi', 'Verifikasi:', array('class' => 'col-sm-3 control-label')) !!}
-					<div class="col-sm-7">
-						{!! Form::text('verifikasi', null, array('class'=> 'form-control')) !!}
+					<div class="col-sm-7" style="padding-top:8px">
+						{!! Form::checkbox('verifikasi', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('verifikator', 'Verifikator:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('verifikator', null, array('class'=> 'form-control')) !!}
+                        {!! SupervisorModel::list_supervisor('verifikator') !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('waktu_verifikasi', 'Waktu verifikasi:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('waktu_verifikasi', null, array('class'=> 'form-control')) !!}
+                        <!-- <input type="datetime-local" name="waktu_verifikasi" id="waktu_verifikasi"  class="form-control"/> -->
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type='text' name="waktu_verifikasi" class="form-control" id="waktu_verifikasi" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
 					</div>
 				</div>
 
@@ -96,6 +105,8 @@
              
     }
     $(document).ready(function(){
+        $('select').select2();
+        $('#datetimepicker1').datetimepicker();
         $('#batalkan,#back').on('click',function(e){
             e.preventDefault();
             refresh_page();

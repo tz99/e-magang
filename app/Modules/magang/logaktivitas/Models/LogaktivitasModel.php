@@ -21,7 +21,6 @@ class LogaktivitasModel extends Model {
     	'siswa' => 'required',
 		'tanggal' => 'required',
 		'aktivitas' => 'required',
-		'verifikasi' => 'required',
 		'verifikator' => 'required',
 		'waktu_verifikasi' => 'required',
 

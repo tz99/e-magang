@@ -56,7 +56,7 @@
                         }?>
                     </td>
 					<td>{!!$logaktivitas->verifikator!!}</td>
-                    <td><?php echo date('d F Y (H:i:s)', strtotime($logaktivitas->waktu_verifikasi)); ?></td>
+                    <td><?php echo date('d F Y (H:i)', strtotime($logaktivitas->waktu_verifikasi)); ?></td>
                     <td>
                     {!! ClaravelHelpers::btnEdit($logaktivitas->id) !!}
                     &nbsp;
