@@ -75,7 +75,7 @@ class SiswamagangModel extends Model {
 		return $html;
 	}
 
-	public static function get_siswa_magang($id){
+	public static function get_nama_siswa($id){
 		$data = DB::table('ms_siswa_magang')
 					->where('id',  $id)
 		            ->first();
