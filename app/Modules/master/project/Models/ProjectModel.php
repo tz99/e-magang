@@ -53,4 +53,13 @@ class ProjectModel extends Model {
 	    return $html;
 	  }
 
+	public static function get_status($id){
+		$data = DB::table('ms_project')
+					->where('id',  $id)
+		            ->first();
+
+		return ($data)?$data->nm_project:'';
+	}
+  
+
 }
