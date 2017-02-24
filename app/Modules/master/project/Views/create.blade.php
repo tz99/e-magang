@@ -14,22 +14,22 @@
         <div class="col-md-12">
             {!! Form::open(array('url' => \Request::path(), 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax'),'id'=>'simpan')) !!}
             <div class="box-body">
-                				<div class="form-group">
-					{!! Form::label('nm_project', 'Nama Project:', array('class' => 'col-sm-3 control-label')) !!}
+            <div class="form-group">
+					{!! Form::label('nm_project', 'Nama Project:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('nm_project', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('deskripsi', 'Deskripsi :', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('deskripsi', 'Deskripsi :', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
 						{!! Form::text('deskripsi', null, array('class'=> 'form-control')) !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('status', 'Status:', array('class' => 'col-sm-3 control-label')) !!}
+					{!! Form::label('status', 'Status:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::select('status', array('1'=> '1'), '1') !!}
+						{!! ProjectModel::list_status('status') !!}
 					</div>
 				</div>
 
@@ -72,6 +72,7 @@
         }); 
     }
     $(document).ready(function(){
+        $('select').select2();
         $('#batalkan,#back').on('click',function(e){
             e.preventDefault();
             refresh_page();

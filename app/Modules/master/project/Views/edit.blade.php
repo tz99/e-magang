@@ -19,24 +19,24 @@
         {!! Form::model($project, array('url' => $uri, 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax') ,'id'=>'simpan')) !!}
         {!! Form::hidden('id') !!}
         <div class="box-body">
-            				<div class="form-group">
-					{!! Form::label('nm_project', 'Nama Project:', array('class' => 'col-sm-3 control-label')) !!}
-					<div class="col-sm-7">
-						{!! Form::text('nm_project', null, array('class'=> 'form-control')) !!}
-					</div>
+        	<div class="form-group">
+				{!! Form::label('nm_project', 'Nama Project:', array('class' => 'col-sm-3 control-label')) !!}
+				<div class="col-sm-7">
+					{!! Form::text('nm_project', null, array('class'=> 'form-control')) !!}
 				</div>
-				<div class="form-group">
-					{!! Form::label('deskripsi', 'Deskripsi :', array('class' => 'col-sm-3 control-label')) !!}
-					<div class="col-sm-7">
-						{!! Form::text('deskripsi', null, array('class'=> 'form-control')) !!}
-					</div>
+			</div>
+			<div class="form-group">
+				{!! Form::label('deskripsi', 'Deskripsi :', array('class' => 'col-sm-3 control-label')) !!}
+				<div class="col-sm-7">
+					{!! Form::text('deskripsi', null, array('class'=> 'form-control')) !!}
 				</div>
-				<div class="form-group">
-					{!! Form::label('status', 'Status:', array('class' => 'col-sm-3 control-label')) !!}
-					<div class="col-sm-7">
-						{!! Form::select('status', array('1'=> '1'), '1') !!}
-					</div>
+			</div>
+			<div class="form-group">
+				{!! Form::label('status', 'Status:', array('class' => 'col-sm-3 control-label')) !!}
+				<div class="col-sm-7">
+					{!! ProjectModel::list_status('status',$project->status) !!}
 				</div>
+			</div>
 
         </div>
         <div class="box-footer">
