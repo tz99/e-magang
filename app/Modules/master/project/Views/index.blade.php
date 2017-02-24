@@ -14,7 +14,7 @@
             <div class="box-tools pull-right">
                 {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!}
                 {!!csrf_field()!!}
-                <div class="input-group" style="width: 200px;">
+                <div class="input-group" style="width: 300px;">
                     <input type="text" class="form-control" name="search" value="{!! \Input::get('search')!!}">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
@@ -30,10 +30,9 @@
                     <thead class="bg-primary">
                     <tr>
                         <th><input type="checkbox" name="checkall" id="checkall" class="checkall" value="1" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Pilih Semua"></th>
-                        					<th>Nama Project</th>
-					<th>Deskripsi </th>
-					<th>Status</th>
-
+                        <th>Nama Project</th>
+    					<th>Deskripsi </th>
+    					<th>Status</th>
                         <th>Act.</th>
                     </tr>
                     </thead>   
@@ -42,10 +41,15 @@
                     @foreach ($projects as $project)
                     <tr>
                         <td><center>{!! ClaravelHelpers::ckDelete($project->id); !!}</center></td>
-                        					<td>{!!$project->nm_project!!}</td>
-					<td>{!!$project->deskripsi!!}</td>
-					<td>{!!$project->status!!}</td>
-
+                        <td>{!!$project->nm_project!!}</td>
+    					<td>{!!$project->deskripsi!!}</td>
+                        @if ($project->status == 1)
+                            <td><span class="label label-warning" style="font-size:90%">On Progress</span></td>
+                        @elseif ($project->status == 2)
+                            <td><span class="label label-success" style="font-size:90%">Finished</span></td>
+                        @elseif ($project->status == 3)
+                            <td><span class="label label-danger" style="font-size:90%">Revision</span></td>
+                        @endif    
                         <td>
                         {!! ClaravelHelpers::btnEdit($project->id) !!}
                         &nbsp;

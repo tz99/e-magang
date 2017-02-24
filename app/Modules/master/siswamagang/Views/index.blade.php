@@ -63,7 +63,6 @@
                     @else
                         <td>S1</td>
                     @endif                    
-					<!-- <td>{!!$siswamagang->jenjang_pddk!!}</td> -->
 					<td>{!!$siswamagang->alamat!!}</td>
 					<td>{!!$siswamagang->no_telp!!}</td>
 					<td>{!!$siswamagang->email!!}</td>

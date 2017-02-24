@@ -36,4 +36,21 @@ class ProjectModel extends Model {
 		}
 	}
 
+	public static function list_status($project_id='', $selected=''){
+	    $project = array (
+	      '1' =>'On Progress',
+	      '2' =>'Finished',
+	      '3' =>'Revision',
+	    );
+	    $html = '<select id="'.$project_id.'" name="'.$project_id.'" class="form-control">';
+	    $html .= '<option value="">Pilih Status Project</option>';
+	    $no=1;
+	    foreach($project as $prj){
+	      $html .= '<option value='.$no.' '.(($selected==$no)?'selected':'').'>'.$prj.'</option>';
+	    $no++;  
+	    }    
+	    $html .= '</select>';    
+	    return $html;
+	  }
+
 }
