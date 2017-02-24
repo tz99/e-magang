@@ -35,4 +35,19 @@ class JenisizinModel extends Model {
 		}
 	}
 
+	public static function list_jenis_izin($nm_var='', $selected=''){
+		$data = DB::table('ms_jenis_izin')
+		            ->get();
+		$html = '<select id="'.$nm_var.'" name="'.$nm_var.'" class="form-control">';
+		$html .= '<option value="">Jenis Izin</option>';
+		$no=1;
+		foreach($data as $siswa){
+			$html .= '<option value='.$siswa->id.' '.(($selected==$siswa->id)?'selected':'').'>'.$siswa->nm_izin.'</option>';
+			$no++;
+		}		
+		$html .= '</select>';
+		
+		return $html;
+	}
+
 }
