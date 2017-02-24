@@ -54,7 +54,7 @@ class JenismagangModel extends Model {
 					->where('id',  $id)
 		            ->first();
 
-		return $data->nama;
+		return ($data)?$data->nama:'';
 	}
 
 }
