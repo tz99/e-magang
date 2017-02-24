@@ -80,7 +80,7 @@ class SiswamagangModel extends Model {
 					->where('id',  $id)
 		            ->first();
 
-		return $data->nm_siswa;
+		return ($data)?$data->nm_siswa:'';
 	}
 
 	  
