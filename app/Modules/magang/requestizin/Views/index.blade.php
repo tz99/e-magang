@@ -52,7 +52,7 @@
 					<td>{!! JenisizinModel::get_jenis_izin($requestizin->jenis_izin) !!}</td>
 					<td>
                         <?php  
-                        if ($requestizin->surat_izin == 1){?>
+                        if ($requestizin->surat_izin == 0){?>
                             <span class="label label-danger" style="font-size:90%">Tidak Ada</span><?php
                         }else{?>
                             <span class="label label-success" style="font-size:90%">Ada</span><?php
@@ -61,7 +61,7 @@
 					<td>{!!$requestizin->keterangan_izin!!}</td>
 					<td>
                         <?php  
-                        if ($requestizin->verifikasi_izin == 1){?>
+                        if ($requestizin->verifikasi_izin == 0){?>
                             <span class="label label-danger" style="font-size:90%">Belum Verifikasi</span><?php
                         }else{?>
                             <span class="label label-success" style="font-size:90%">Sudah Verifikasi</span><?php

@@ -76,7 +76,7 @@ class RequestizinController extends Controller {
             
             $waktu = "$Y-$m-$d $H:$i";    
         }else{
-            $waktu='';
+            $waktu='0000-00-00 00:00:00';
         }
         if (empty(Input::get('verifikasi_izin'))) {
             $ver=0;
