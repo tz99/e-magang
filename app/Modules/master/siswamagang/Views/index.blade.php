@@ -54,15 +54,7 @@
                     <td>{!!$siswamagang->no_induk!!}</td>
 					<td>{!!$siswamagang->nm_siswa!!}</td>
 					<td>{!!$siswamagang->asal_sekolah!!}</td>
-                    @if ($siswamagang->jenjang_pddk == 1)
-                        <td>SMK</td>
-                    @elseif ($siswamagang->jenjang_pddk == 2)
-                        <td>D3</td>
-                    @elseif ($siswamagang->jenjang_pddk == 3)
-                        <td>D4</td>
-                    @else
-                        <td>S1</td>
-                    @endif                    
+                    <td>{!! SiswamagangModel::get_jenjang($siswamagang->jenjang_pddk) !!}</td>        
 					<td>{!!$siswamagang->alamat!!}</td>
 					<td>{!!$siswamagang->no_telp!!}</td>
 					<td>{!!$siswamagang->email!!}</td>

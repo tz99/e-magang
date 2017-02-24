@@ -60,6 +60,17 @@ class SiswamagangModel extends Model {
 	    return $html;
 	  }
 
+	  public static function get_jenjang($id){
+		$jenjang = array (
+	      '1' =>'SMK',
+	      '2' =>'D3',
+	      '3' =>'D4',
+	      '4' =>'S1',
+	    );
+
+		return ($jenjang)?$jenjang[$id]:'';
+	}
+
 	public static function list_nama_siswa($nm_var='', $selected=''){
 		$data = DB::table('ms_siswa_magang')
 		            ->get();
