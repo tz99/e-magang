@@ -30,7 +30,7 @@
                     <thead class="bg-primary">
                     <tr>
                         <th><input type="checkbox" name="checkall" id="checkall" class="checkall" value="1" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Pilih Semua"></th>
-                        					<th>Tanggal Awal Izin</th>
+                    <th>Tanggal Awal Izin</th>
 					<th>Tanggal Akhir Izin</th>
 					<th>Jenis Izin</th>
 					<th>Surat Izin</th>
@@ -47,14 +47,30 @@
                     @foreach ($requestizins as $requestizin)
                     <tr>
                         <td><center>{!! ClaravelHelpers::ckDelete($requestizin->id); !!}</center></td>
-                        					<td>{!!$requestizin->tgl_awal_izin!!}</td>
+                    <td>{!!$requestizin->tgl_awal_izin!!}</td>
 					<td>{!!$requestizin->tgl_akhir_izin!!}</td>
-					<td>{!!$requestizin->jenis_izin!!}</td>
-					<td>{!!$requestizin->surat_izin!!}</td>
+					<td>{!! JenisizinModel::get_jenis_izin($requestizin->jenis_izin) !!}</td>
+					<td>
+                        <?php  
+                        if ($requestizin->surat_izin == 1){?>
+                            <span class="label label-danger" style="font-size:90%">Tidak Ada</span><?php
+                        }else{?>
+                            <span class="label label-success" style="font-size:90%">Ada</span><?php
+                        }?>
+                    </td>
 					<td>{!!$requestizin->keterangan_izin!!}</td>
-					<td>{!!$requestizin->verifikasi_izin!!}</td>
-					<td>{!!$requestizin->verifikator_izin!!}</td>
-					<td>{!!$requestizin->waktu_verifikasi_izin!!}</td>
+					<td>
+                        <?php  
+                        if ($requestizin->verifikasi_izin == 1){?>
+                            <span class="label label-danger" style="font-size:90%">Belum Verifikasi</span><?php
+                        }else{?>
+                            <span class="label label-success" style="font-size:90%">Sudah Verifikasi</span><?php
+                        }?>
+                    </td>
+					<td>{!! SupervisorModel::get_supervisor($requestizin->verifikator_izin) !!}</td>
+					<td>
+                        <?php echo date('d F Y (H:i)', strtotime($requestizin->waktu_verifikasi_izin)); ?>
+                    </td>
 
                         <td>
                         {!! ClaravelHelpers::btnEdit($requestizin->id) !!}
@@ -142,7 +158,14 @@
                         },
                         success:function(html){
                             preloader.off();
-                            notification(html,'success');
+                            if(html=='9')
+                            {
+                                notification('Data Berhasil Dihapus','success');    
+                            }
+                            else
+                            {
+                                notification(html,'error');
+                            }
                             $this.closest('tr').fadeOut(300,function(){
                                 $(this).remove();
                             });
@@ -200,7 +223,14 @@
                         },
                         success:function(html){
                             preloader.off();
-                            notification(html,'success');
+                            if(html=='9')
+                            {
+                                notification('Data Berhasil Dihapus','success');    
+                            }
+                            else
+                            {
+                                notification(html,'error');
+                            }
                             iki.find('input[type=checkbox]').each(function (t){
                                 if($(this).is(':checked')){
                                     $(this).closest('tr').fadeOut(100)                                        

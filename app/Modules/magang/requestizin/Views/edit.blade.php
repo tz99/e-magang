@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?php echo asset('packages/tugumuda/css/BeatPicker.min.css'); ?>">
+<script src="<?php echo asset('packages/tugumuda/js/BeatPicker.min.js'); ?>"></script>
 <section class="content-header">
     <h1>
         Edit Requestizin<small></small>
@@ -19,28 +21,31 @@
         {!! Form::model($requestizin, array('url' => $uri, 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax') ,'id'=>'simpan')) !!}
         {!! Form::hidden('id') !!}
         <div class="box-body">
-            				<div class="form-group">
+            	<div class="form-group">
 					{!! Form::label('tgl_awal_izin', 'Tanggal Awal Izin:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('tgl_awal_izin', null, array('class'=> 'form-control')) !!}
+						{!! Form::text('tgl_awal_izin', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('tgl_akhir_izin', 'Tanggal Akhir Izin:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('tgl_akhir_izin', null, array('class'=> 'form-control')) !!}
+						{!! Form::text('tgl_akhir_izin', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('jenis_izin', 'Jenis Izin:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('jenis_izin', null, array('class'=> 'form-control')) !!}
+						{!! JenisizinModel::list_jenis_izin('jenis_izin') !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('surat_izin', 'Surat Izin:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('surat_izin', null, array('class'=> 'form-control')) !!}
+						<select class="form-control" name="surat_izin">
+                            <option value="0">Ada</option>
+                            <option value="1">Tidak Ada</option>
+                        </select>
 					</div>
 				</div>
 				<div class="form-group">
@@ -52,19 +57,48 @@
 				<div class="form-group">
 					{!! Form::label('verifikasi_izin', 'Verifikasi:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('verifikasi_izin', null, array('class'=> 'form-control')) !!}
+						{!! SupervisorModel::list_supervisor('verifikator_izin') !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('verifikator_izin', 'Verifikator:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('verifikator_izin', null, array('class'=> 'form-control')) !!}
+					   {!! SupervisorModel::list_supervisor('verifikator_izin') !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('waktu_verifikasi_izin', 'Waktu Verifikasi:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('waktu_verifikasi_izin', null, array('class'=> 'form-control')) !!}
+						<div class='input-group date' id='datetimepicker1'>
+                            <?php foreach ($data as $itemslog) {
+                            $log = $itemslog->waktu_verifikasi_izin;
+                            $ex_waktu = explode(' ', $log);
+                                $date = $ex_waktu[0];
+                                $time = $ex_waktu[1];
+
+                                $ex_date = explode('-', $date);
+                                    $Y = $ex_date[0];
+                                    $m = $ex_date[1];
+                                    $d = $ex_date[2];
+
+                                $ex_time = explode(':', $time);
+                                    $H = $ex_time[0];
+                                    $i = $ex_time[1];
+
+                                if ($H >12) {
+                                    $H   = $H-12;
+                                    $apm = 'PM'; 
+                                }else{
+                                    $apm = 'AM';
+                                }
+                            
+                            $waktu = $m."/".$d."/".$Y." ".$H.":".$i." ".$apm;
+                            } ?>
+                            <input type='text' name="waktu_verifikasi_izin" value="<?php echo $waktu ?>" class="form-control" id="waktu_verifikasi_izin" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
 					</div>
 				</div>
 
@@ -108,6 +142,8 @@
              
     }
     $(document).ready(function(){
+        $('select').select2();
+        $('#datetimepicker1').datetimepicker();
         $('#batalkan,#back').on('click',function(e){
             e.preventDefault();
             refresh_page();

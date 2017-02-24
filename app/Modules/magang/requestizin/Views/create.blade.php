@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?php echo asset('packages/tugumuda/css/BeatPicker.min.css'); ?>">
+<script src="<?php echo asset('packages/tugumuda/js/BeatPicker.min.js'); ?>"></script>
 <section class="content-header">
     <h1>
         Buat Request Izin Baru<small></small>
@@ -14,28 +16,31 @@
         <div class="col-md-12">
             {!! Form::open(array('url' => \Request::path(), 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax'),'id'=>'simpan')) !!}
             <div class="box-body">
-                				<div class="form-group">
+                <div class="form-group">
 					{!! Form::label('tgl_awal_izin', 'Tanggal Awal Izin:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('tgl_awal_izin', null, array('class'=> 'form-control')) !!}
+						{!! Form::text('tgl_awal_izin', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('tgl_akhir_izin', 'Tanggal Akhir Izin:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('tgl_akhir_izin', null, array('class'=> 'form-control')) !!}
+						{!! Form::text('tgl_akhir_izin', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('jenis_izin', 'Jenis Izin:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('jenis_izin', null, array('class'=> 'form-control')) !!}
+						{!! JenisizinModel::list_jenis_izin('jenis_izin') !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('surat_izin', 'Surat Izin:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('surat_izin', null, array('class'=> 'form-control')) !!}
+                        <select class="form-control" name="surat_izin">
+                            <option value="0">Ada</option>
+                            <option value="1">Tidak Ada</option>
+                        </select>
 					</div>
 				</div>
 				<div class="form-group">
@@ -47,19 +52,27 @@
 				<div class="form-group">
 					{!! Form::label('verifikasi_izin', 'Verifikasi:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('verifikasi_izin', null, array('class'=> 'form-control')) !!}
+						 <select class="form-control" name="verifikasi_izin">
+                            <option value="0">Sudah Verifikasi</option>
+                            <option value="1">Belum Verifikasi</option>
+                        </select>
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('verifikator_izin', 'Verifikator:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('verifikator_izin', null, array('class'=> 'form-control')) !!}
+						{!! SupervisorModel::list_supervisor('verifikator_izin') !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('waktu_verifikasi_izin', 'Waktu Verifikasi:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('waktu_verifikasi_izin', null, array('class'=> 'form-control')) !!}
+						<div class='input-group date' id='datetimepicker1'>
+                            <input type='text' name="waktu_verifikasi_izin" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
 					</div>
 				</div>
 
@@ -102,6 +115,7 @@
         }); 
     }
     $(document).ready(function(){
+        $('#datetimepicker1').datetimepicker();
         $('#batalkan,#back').on('click',function(e){
             e.preventDefault();
             refresh_page();

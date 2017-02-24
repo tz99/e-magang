@@ -41,7 +41,7 @@
                     @foreach ($pengumumans as $pengumuman)
                     <tr>
                         <td><center>{!! ClaravelHelpers::ckDelete($pengumuman->id); !!}</center></td>
-                        					<td>{!!$pengumuman->isi_pengumuman!!}</td>
+                        <td>{!!$pengumuman->isi_pengumuman!!}</td>
 					<td>
                         <?php 
                             $publish="$pengumuman->pub_pengumuman";

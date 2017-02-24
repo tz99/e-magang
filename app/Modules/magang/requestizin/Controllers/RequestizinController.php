@@ -3,7 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Modules\magang\requestizin\Models\RequestizinModel;
 use Input,View, Request, Form, File;
-
+use DB;
 /**
 * Requestizin Controller
 * @var Requestizin
@@ -53,7 +53,47 @@ class RequestizinController extends Controller {
 
     public function postCreate(){
         cekAjax();
-        $input = Input::all();
+
+        $get_waktu = Input::get('waktu_verifikasi_izin');
+        if (!empty($get_waktu)) {
+            $ex_waktu = explode(' ', $get_waktu);
+                $date = $ex_waktu[0];
+                $time = $ex_waktu[1];
+                $apm  = $ex_waktu[2];
+
+                $ex_date = explode('/', $date);
+                    $d = $ex_date[1];
+                    $m = $ex_date[0];
+                    $Y = $ex_date[2];
+
+                $ex_time = explode(':', $time);
+                    $H = $ex_time[0];
+                    $i = $ex_time[1];
+
+                if ($apm == 'PM') {
+                    $H = $H+12;
+                }
+            
+            $waktu = "$Y-$m-$d $H:$i";    
+        }else{
+            $waktu='';
+        }
+        if (empty(Input::get('verifikasi_izin'))) {
+            $ver=0;
+        }else{
+            $ver=1;
+        }
+
+        $input = array(
+            'tgl_awal_izin' => input::get('tgl_awal_izin'),
+            'tgl_akhir_izin' => input::get('tgl_akhir_izin'),
+            'jenis_izin' => input::get('jenis_izin'),
+            'surat_izin' => input::get('surat_izin'),
+            'keterangan_izin' => input::get('keterangan_izin'),
+            'verifikasi_izin' => input::get('verifikasi_izin'),
+            'verifikator_izin' => input::get('verifikasi_izin'),
+            'waktu_verifikasi_izin' => $get_waktu
+        );
         $validation = \Validator::make($input, RequestizinModel::$rules);
         if ($validation->passes()){
             $input['user_id'] = \Session::get('user_id');
@@ -73,14 +113,57 @@ class RequestizinController extends Controller {
         cekAjax();
         $id = ($id == false)?Input::get('id'):'';
         $requestizin = $this->requestizin->find($id);
+        $data = DB::table('mg_request_izin')
+                    ->where('id',  $requestizin->id)
+                    ->get();
         //if (is_null($requestizin)){return \Redirect::to('magang/requestizin/index');}
-        return View::make('requestizin::edit', compact('requestizin'));
+        return View::make('requestizin::edit', compact('requestizin','data'));
     }
     
     public function postEdit(){
         cekAjax();
         $id = Input::get('id');
-        $input = Input::all();
+
+        $get_waktu = Input::get('waktu_verifikasi_izin');
+        if (!empty($get_waktu)) {
+            $ex_waktu = explode(' ', $get_waktu);
+                $date = $ex_waktu[0];
+                $time = $ex_waktu[1];
+                $apm  = $ex_waktu[2];
+
+                $ex_date = explode('/', $date);
+                    $d = $ex_date[1];
+                    $m = $ex_date[0];
+                    $Y = $ex_date[2];
+
+                $ex_time = explode(':', $time);
+                    $H = $ex_time[0];
+                    $i = $ex_time[1];
+
+                if ($apm == 'PM') {
+                    $H = $H+12;
+                }
+            
+            $waktu = "$Y-$m-$d $H:$i";    
+        }else{
+            $waktu='';
+        }
+        if (empty(Input::get('verifikasi_izin'))) {
+            $ver=0;
+        }else{
+            $ver=1;
+        }
+
+        $input = array(
+            'tgl_awal_izin' => $waktu,
+            'tgl_akhir_izin' => $waktu,
+            'jenis_izin' => input::get('jenis_izin'),
+            'surat_izin' => input::get('surat_izin'),
+            'keterangan_izin' => input::get('keterangan_izin'),
+            'verifikasi_izin' => input::get('verifikasi_izin'),
+            'verifikator_izin' => input::get('verifikasi_izin'),
+            'waktu_verifikasi_izin' => $get_waktu
+        );
         $validation = \Validator::make($input, RequestizinModel::$rules);
         
         if ($validation->passes()){

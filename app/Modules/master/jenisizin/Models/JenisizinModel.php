@@ -1,6 +1,6 @@
 <?php namespace App\Modules\master\jenisizin\Models;
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 
 /**
 * Jenisizin Model

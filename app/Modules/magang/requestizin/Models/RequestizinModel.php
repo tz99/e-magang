@@ -18,14 +18,12 @@ class RequestizinModel extends Model {
 	protected $table = "mg_request_izin";
 
 	public static $rules = array(
-    		'tgl_awal_izin' => 'required',
-		'tgl_akhir_izin' => 'required',
-		'jenis_izin' => 'required',
-		'surat_izin' => 'required',
-		'keterangan_izin' => 'required',
-		'verifikasi_izin' => 'required',
-		'verifikator_izin' => 'required',
-		'waktu_verifikasi_izin' => 'required',
+  //   	'tgl_awal_izin' => 'required',
+		// 'tgl_akhir_izin' => 'required',
+		// 'jenis_izin' => 'required',
+		// 'keterangan_izin' => 'required',
+		// 'verifikator_izin' => 'required',
+		// 'waktu_verifikasi_izin' => 'required',
 
     );
 

@@ -23,7 +23,7 @@
 				<div class="form-group">
 					{!! Form::label('pub_pengumuman', 'Publish:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
-                        <select name="pub_pengumuman">
+                        <select class="form-control" name="pub_pengumuman">
                             <option value="0">Publish</option>
                             <option value="1">TIdak Publish</option>
                         </select>
