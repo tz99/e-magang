@@ -91,8 +91,8 @@ class RequestizinController extends Controller {
             'surat_izin' => input::get('surat_izin'),
             'keterangan_izin' => input::get('keterangan_izin'),
             'verifikasi_izin' => input::get('verifikasi_izin'),
-            'verifikator_izin' => input::get('verifikasi_izin'),
-            'waktu_verifikasi_izin' => $get_waktu
+            'verifikator_izin' => input::get('verifikator_izin'),
+            'waktu_verifikasi_izin' => $waktu
         );
         $validation = \Validator::make($input, RequestizinModel::$rules);
         if ($validation->passes()){

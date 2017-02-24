@@ -36,15 +36,26 @@
 				<div class="form-group">
 					{!! Form::label('jenis_izin', 'Jenis Izin:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! JenisizinModel::list_jenis_izin('jenis_izin') !!}
+						{!! JenisizinModel::list_jenis_izin('jenis_izin',$requestizin->jenis_izin) !!}
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('surat_izin', 'Surat Izin:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
 						<select class="form-control" name="surat_izin">
-                            <option value="0">Ada</option>
+                        @if ($requestizin->surat_izin==0){
+                            <option value="">Pilih</option>   
+                            <option selected value="0">Ada</option>    
                             <option value="1">Tidak Ada</option>
+                        }@elseif ($requestizin->surat_izin==1){
+                            <option value="">Pilih</option>   
+                            <option value="0">Ada</option>    
+                            <option selected value="1">Tidak Ada</option>
+                        }@else {
+                            <option value="">Pilih</option>   
+                            <option value="0">Ada</option>    
+                            <option value="1">Tidak Ada</option>
+                        }@endif
                         </select>
 					</div>
 				</div>
@@ -57,13 +68,16 @@
 				<div class="form-group">
 					{!! Form::label('verifikasi_izin', 'Verifikasi:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-						{!! SupervisorModel::list_supervisor('verifikator_izin') !!}
+						<select class="form-control" name="verifikasi_izin">
+                            <option value="0">Sudah Verifikasi</option>
+                            <option value="1">Belum Verifikasi</option>
+                        </select>
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('verifikator_izin', 'Verifikator:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
-					   {!! SupervisorModel::list_supervisor('verifikator_izin') !!}
+					   {!! SupervisorModel::list_supervisor('verifikator_izin',$requestizin->verifikator_izin) !!}
 					</div>
 				</div>
 				<div class="form-group">

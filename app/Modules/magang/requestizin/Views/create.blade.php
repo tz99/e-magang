@@ -38,6 +38,7 @@
 					{!! Form::label('surat_izin', 'Surat Izin:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
                         <select class="form-control" name="surat_izin">
+                            <option value="">Pilih</option>
                             <option value="0">Ada</option>
                             <option value="1">Tidak Ada</option>
                         </select>
@@ -53,6 +54,7 @@
 					{!! Form::label('verifikasi_izin', 'Verifikasi:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
 						 <select class="form-control" name="verifikasi_izin">
+                            <option value="">Pilih</option>
                             <option value="0">Sudah Verifikasi</option>
                             <option value="1">Belum Verifikasi</option>
                         </select>
