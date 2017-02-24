@@ -50,4 +50,13 @@ class JenisizinModel extends Model {
 		return $html;
 	}
 
+	public static function get_jenis_izin($id){
+		$data = DB::table('ms_jenis_izin')
+					->where('id',  $id)
+		            ->first();
+
+		return ($data)?$data->nm_izin:'';
+	}
+
+
 }
