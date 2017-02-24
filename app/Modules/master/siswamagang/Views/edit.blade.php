@@ -15,6 +15,10 @@
     <?php
       $rpos = strrpos(\Request::path(), '/'); 
       $uri = substr(\Request::path(), 0, $rpos);
+      foreach ($users as $value) {
+        $user = $value->username;
+        $pass = $value->password;
+      }
     ?>
     <div class="row">
       <div class="col-md-8">
@@ -87,6 +91,18 @@
 						 {!! SupervisorModel::list_supervisor('nm_supervisior',$siswamagang->nm_supervisior) !!}
 					</div>
 				</div>
+                <div class="form-group">
+                    {!! Form::label('username', 'Username:', array('class' => 'col-sm-3 control-label')) !!}
+                    <div class="col-sm-7">
+                        <input type="text" name="username" class="form-control" value="<?php echo $user ?>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('password', 'Password:', array('class' => 'col-sm-3 control-label')) !!}
+                    <div class="col-sm-7">
+                        <input type="password" name="password" class="form-control" value="">
+                    </div>
+                </div>
                 <div class="form-group">
                     {!! Form::label('foto', 'Foto:', array('class' => 'col-sm-3 control-label')) !!}
                     <div class="col-sm-7">

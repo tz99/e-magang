@@ -58,7 +58,7 @@ class SupervisorController extends Controller {
         $input_users->password = \Hash::make(Input::get('password'));
         $input_users->email = Input::get('email');
         $input_users->remember_token = Input::get('_token');
-        $input_users->role_id = 1;
+        $input_users->role_id = 2;
         $input_users->save();
 
         $input = array(

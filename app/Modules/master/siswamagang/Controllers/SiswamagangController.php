@@ -5,6 +5,7 @@ use App\Modules\master\siswamagang\Models\SiswamagangModel;
 use Input,View, Request, Form, File;
 use Auth;
 use DB;
+use App\User;
 /**
 * Siswamagang Controller
 * @var Siswamagang
@@ -56,7 +57,17 @@ class SiswamagangController extends Controller {
     }
 
     public function postCreate(){        
-        cekAjax();        
+        cekAjax();
+        $input_users = new User();
+        $input_users->name = Input::get('nm_siswa');
+        $input_users->username = Input::get('username');
+        $input_users->password = \Hash::make(Input::get('password'));
+        $input_users->email = Input::get('email');
+        $input_users->remember_token = Input::get('_token');
+        $input_users->role_id = 3;
+        /*$input_users->foto = Input::get('foto');*/
+        $input_users->save();
+
         $input = array(
             'no_induk' => Input::get('no_induk'),
             'nm_siswa' => Input::get('nm_siswa'),
@@ -121,13 +132,26 @@ class SiswamagangController extends Controller {
         $id = ($id == false)?Input::get('id'):'';
         $siswamagang = $this->siswamagang->find($id);
         //if (is_null($siswamagang)){return \Redirect::to('master/siswamagang/index');}
-        return View::make('siswamagang::edit', compact('siswamagang'));
+         $users = DB::table('users')
+                    ->where('email',  $siswamagang->email)
+                    ->get();
+        return View::make('siswamagang::edit', compact('siswamagang','users'));
     }
     
     public function postEdit(){
         cekAjax();
         $id = Input::get('id');
-        /*$input = Input::all();*/
+        $password_in = Input::get('password');
+        $data = $this->siswamagang->find($id);
+
+        //update ke tabel users
+        if ($password_in=='') {
+            DB::table('users')->where('email',  $data->email)->update(array('name' => Input::get('nm_siswa'),'username' => Input::get('username'),'email' =>  Input::get('email')));    
+        }else{
+            DB::table('users')
+            ->where('email',  $data->email)->update(array('name' => Input::get('nm_siswa'),'username' => Input::get('username'), 'password' => bcrypt(Input::get('password')),'email' =>  Input::get('email')));    
+        }
+
         $input = array(
             'no_induk' => Input::get('no_induk'),
             'nm_siswa' => Input::get('nm_siswa'),
@@ -193,6 +217,9 @@ class SiswamagangController extends Controller {
     public function postDelete(){
         cekAjax();
         $ids = Input::get('id');
+        $data = $this->siswamagang->find($ids);
+        DB::table('users')->where('email', $data->email)->delete();
+
         if (is_array($ids)){
             foreach($ids as $id){
                 $data = $this->siswamagang->find($id);
