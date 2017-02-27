@@ -1,10 +1,10 @@
 <section class="content-header">
     <h1>
-        Laporan Logaktivitas<small></small>
+        Laporan Log Aktivitas<small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{!!url()!!}"> Dashboard</a></li>
-        <li class="active">Laporan Logaktivitas</li>
+        <li class="active">Laporan Log Aktivitas</li>
     </ol>
 </section>
 <section class="content">
@@ -28,11 +28,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-1" id="_cari">
+                <div class="col-sm-2" id="_cari">
                     <div class="form-group">
                         <span style="font-weight:bold">&nbsp</span>
                         <div style="clear:both;margin-top:5px">
-                            <button class="btn btn-default cari" type="submit">Cari</button>
+                            <button class="btn btn-default cari" type="submit">Lihat Laporan</button>
                         </div>
                     </div>
                 </div>
