@@ -69,8 +69,19 @@
 					{!! Form::label('verifikasi_izin', 'Verifikasi:', array('class' => 'col-sm-3 control-label')) !!}
 					<div class="col-sm-7">
 						<select class="form-control" name="verifikasi_izin">
-                            <option value="0">Sudah Verifikasi</option>
-                            <option value="1">Belum Verifikasi</option>
+                            @if ($requestizin->verifikasi_izin==0){
+                                <option value="">Pilih</option>   
+                                <option selected value="0">Sudah Verifikasi</option>    
+                                <option value="1">Belum Verifikasi</option>
+                            }@elseif ($requestizin->verifikasi_izin==1){
+                                <option value="">Pilih</option>   
+                                <option value="0">Sudah Verifikasi</option>    
+                                <option selected value="1">Belum Verifikasi</option>
+                            }@else {
+                                <option value="">Pilih</option>   
+                                <option value="0">Sudah Verifikasi</option>    
+                                <option value="1">Belum Verifikasi</option>
+                            }@endif
                         </select>
 					</div>
 				</div>

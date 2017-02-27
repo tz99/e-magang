@@ -53,23 +53,27 @@
 					<td>
                         <?php  
                         if ($requestizin->surat_izin == 0){?>
-                            <span class="label label-danger" style="font-size:90%">Tidak Ada</span><?php
-                        }else{?>
                             <span class="label label-success" style="font-size:90%">Ada</span><?php
+                        }else{?>
+                            <span class="label label-danger" style="font-size:90%">TidakAda</span><?php
                         }?>
                     </td>
 					<td>{!!$requestizin->keterangan_izin!!}</td>
 					<td>
                         <?php  
                         if ($requestizin->verifikasi_izin == 0){?>
-                            <span class="label label-danger" style="font-size:90%">Belum Verifikasi</span><?php
-                        }else{?>
                             <span class="label label-success" style="font-size:90%">Sudah Verifikasi</span><?php
+                        }else{?>
+                            <span class="label label-danger" style="font-size:90%">Belum Verifikasi</span><?php
                         }?>
                     </td>
 					<td>{!! SupervisorModel::get_supervisor($requestizin->verifikator_izin) !!}</td>
-					<td>
-                        <?php echo date('d F Y (H:i)', strtotime($requestizin->waktu_verifikasi_izin)); ?>
+                        <!-- <?php echo date('d F Y (H:i)', strtotime($requestizin->waktu_verifikasi_izin)); ?> -->
+                        <?php if ($requestizin->waktu_verifikasi_izin == '0000-00-00 00:00:00') {
+                            echo '<td align="center">-';
+                        }else{
+                            echo "<td>".date('d F Y (H:i)', strtotime($requestizin->waktu_verifikasi_izin));
+                        } ?></td>
                     </td>
 
                         <td>

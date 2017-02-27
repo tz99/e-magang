@@ -26,7 +26,7 @@ class RequestizinController extends Controller {
         if (Input::has('search')) {
             if(strlen(Input::has('search')) > 0){
                 $requestizins = $this->requestizin
-                			->orWhere('tgl_awal_izin', 'LIKE', '%'.Input::get('search').'%')
+            ->orWhere('tgl_awal_izin', 'LIKE', '%'.Input::get('search').'%')
 			->orWhere('tgl_akhir_izin', 'LIKE', '%'.Input::get('search').'%')
 			->orWhere('jenis_izin', 'LIKE', '%'.Input::get('search').'%')
 			->orWhere('surat_izin', 'LIKE', '%'.Input::get('search').'%')
@@ -76,7 +76,7 @@ class RequestizinController extends Controller {
             
             $waktu = "$Y-$m-$d $H:$i";    
         }else{
-            $waktu='0000-00-00 00:00:00';
+            $waktu='0000-00-00 00:00';
         }
         if (empty(Input::get('verifikasi_izin'))) {
             $ver=0;
@@ -155,14 +155,14 @@ class RequestizinController extends Controller {
         }
 
         $input = array(
-            'tgl_awal_izin' => $waktu,
-            'tgl_akhir_izin' => $waktu,
+            'tgl_awal_izin' => input::get('tgl_awal_izin'),
+            'tgl_akhir_izin' => input::get('tgl_akhir_izin'),
             'jenis_izin' => input::get('jenis_izin'),
             'surat_izin' => input::get('surat_izin'),
             'keterangan_izin' => input::get('keterangan_izin'),
             'verifikasi_izin' => input::get('verifikasi_izin'),
-            'verifikator_izin' => input::get('verifikasi_izin'),
-            'waktu_verifikasi_izin' => $get_waktu
+            'verifikator_izin' => input::get('verifikator_izin'),
+            'waktu_verifikasi_izin' => $waktu
         );
         $validation = \Validator::make($input, RequestizinModel::$rules);
         
