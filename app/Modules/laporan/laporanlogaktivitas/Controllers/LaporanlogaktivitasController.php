@@ -25,6 +25,7 @@ class LaporanlogaktivitasController extends Controller {
         cekAjax();
 
         if (Input::has('siswa')) {
+            $sts=1;
             $siswa = Input::get('siswa');
             $bulan = Input::get('bulan');
             if((strlen(Input::has('siswa')) > 0) and ($bulan == 0)){
@@ -38,9 +39,10 @@ class LaporanlogaktivitasController extends Controller {
                         ->paginate($_ENV['configurations']['list-limit']);
             }
         }else{
-                $laporanlogaktivitass = DB::table('mg_log_aktivitas')->get();
+            $sts=0;
+            $laporanlogaktivitass = DB::table('mg_log_aktivitas')->get();
         }
 
-        return View::make('laporanlogaktivitas::index', compact('laporanlogaktivitass'));
+        return View::make('laporanlogaktivitas::index', compact('laporanlogaktivitass','sts'));
     }
 }

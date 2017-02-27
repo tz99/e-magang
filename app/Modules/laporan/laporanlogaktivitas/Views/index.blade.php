@@ -13,14 +13,14 @@
             {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!}
                 {!!csrf_field()!!}
                 <div class="col-sm-3">
-                    <div class="form-group">
+                    <div class="form-group" id="_siswa">
                         <span style="font-weight:bold">Siswa</span>
                         <div style="clear:both;margin-top:5px">
                             {!! SiswamagangModel::list_nama_siswa('siswa') !!}
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-3" id="input_bulan">
+                <div class="col-sm-3" id="_bulan">
                     <div class="form-group">
                         <span style="font-weight:bold">Bulan</span>
                         <div style="clear:both;margin-top:5px">
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-1" id="cari">
+                <div class="col-sm-1" id="_cari">
                     <div class="form-group">
                         <span style="font-weight:bold">&nbsp</span>
                         <div style="clear:both;margin-top:5px">
@@ -38,6 +38,8 @@
                 </div>
             {!! Form::close() !!}
         </div>
+        <?php 
+        if ($sts==1) { ?>
         {!! Form::open(array('url' => \Request::path().'/delete', 'method' => 'POST', 'class' => 'form-'.\Config::get('claravel::ajax'),'id'=>'data' )) !!}
         <div class="table-responsive">
             <div class="box-body no-padding">
@@ -91,6 +93,7 @@
           </div>
         </div>
         {!! Form::close() !!}
+        <?php } ?>
     </div>
 </section>         
 
@@ -113,6 +116,10 @@
     }
     
     $(document).ready(function(){
+        $('#_cari').hide();
+        $('#_siswa').on('change',function(e){
+            $('#_cari').fadeIn();
+        })
         $('select').select2();
         $('.pagination').addClass('pagination-sm no-margin pull-right');
         $('.checkme,.checkall').on('change',function(){
