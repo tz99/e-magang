@@ -27,15 +27,15 @@ class LaporanlogaktivitasController extends Controller {
         if (Input::has('siswa')) {
             $siswa = Input::get('siswa');
             $bulan = Input::get('bulan');
-            if((strlen(Input::has('siswa')) > 0) and (strlen(Input::has('bulan')) == 0)){
+            if((strlen(Input::has('siswa')) > 0) and ($bulan == 0)){
                 $laporanlogaktivitass = DB::table('mg_log_aktivitas')
-                        ->orWhere('siswa', 'LIKE', '%'.$siswa.'%')
+                        ->Where('siswa',  $siswa)
                         ->paginate($_ENV['configurations']['list-limit']);
             }else{
-                    // $laporanlogaktivitass = DB::table('mg_log_aktivitas')
-                    //     ->orWhere('siswa', 'LIKE', '%'.$siswa.'%')
-                    //     ->orWhere('siswa', 'LIKE', '%'.$siswa.'%')
-                    //     ->paginate($_ENV['configurations']['list-limit']);
+                    $laporanlogaktivitass = DB::table('mg_log_aktivitas')
+                        ->Where('siswa', $siswa)
+                        ->whereRaw('extract(month from tanggal) = ?', [$bulan])
+                        ->paginate($_ENV['configurations']['list-limit']);
             }
         }else{
                 $laporanlogaktivitass = DB::table('mg_log_aktivitas')->get();

@@ -1,10 +1,10 @@
 <section class="content-header">
     <h1>
-        Laporanlogaktivitas<small></small>
+        Laporan Logaktivitas<small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{!!url()!!}"> Dashboard</a></li>
-        <li class="active">Laporanlogaktivitas</li>
+        <li class="active">Laporan Logaktivitas</li>
     </ol>
 </section>
 <section class="content">
