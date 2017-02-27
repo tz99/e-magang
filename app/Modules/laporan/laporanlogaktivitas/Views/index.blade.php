@@ -1,10 +1,10 @@
 <section class="content-header">
     <h1>
-        Lap.logaktivitas<small></small>
+        Laporanlogaktivitas<small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{!!url()!!}"> Dashboard</a></li>
-        <li class="active">Lap.logaktivitas</li>
+        <li class="active">Laporanlogaktivitas</li>
     </ol>
 </section>
 <section class="content">
@@ -26,7 +26,43 @@
         {!! Form::open(array('url' => \Request::path().'/delete', 'method' => 'POST', 'class' => 'form-'.\Config::get('claravel::ajax'),'id'=>'data' )) !!}
         <div class="table-responsive">
             <div class="box-body no-padding">
-
+                <table class="table table-striped table-hover table-condensed table-bordered" id='tabel'>
+                    <thead class="bg-primary">
+                    <tr>
+                                     <th>Siswa</th>
+                    <th>Tanggal</th>
+                    <th>Aktivitas</th>
+                    <th>Verifikasi</th>
+                    <th>Verifikator</th>
+                    <th>Waktu verifikasi</th>
+                    </tr>
+                    </thead>   
+                    
+                    <tbody>
+                    @foreach ($data as $logaktivitas)
+                    <tr>
+                        <td>{!! SiswamagangModel::get_nama_siswa($logaktivitas->siswa) !!}</td>
+                    <td><?php echo date('d F Y', strtotime($logaktivitas->tanggal)); ?></td>
+                    <td>{!!$logaktivitas->aktivitas!!}</td>
+                    <td><?php  
+                        if ($logaktivitas->verifikasi == 1){?>
+                            <span class="label label-success" style="font-size:90%">Terverifikasi</span><?php
+                        }else{?>
+                            <span class="label label-danger" style="font-size:90%">Belum</span><?php
+                        }?>
+                    </td>
+                    <td>{!! SupervisorModel::get_supervisor($logaktivitas->verifikator) !!}
+                    </td>
+                    <?php if ($logaktivitas->waktu_verifikasi == '0000-00-00 00:00:00') {
+                            echo '<td align="center">-';
+                        }else{
+                            echo "<td>".date('d F Y (H:i)', strtotime($logaktivitas->waktu_verifikasi));
+                        } ?></td>
+                    <td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="box-footer clearfix">
@@ -35,6 +71,7 @@
               {!! ClaravelHelpers::btnDeleteAll() !!}
             </div>
             <div class="col-sm-6">
+              <?php echo $laporanlogaktivitass->appends(array('search' => Input::get('search')))->render(); ?>
             </div>
           </div>
         </div>

@@ -37,6 +37,34 @@ class SupervisorModel extends Model {
 			
 		}
 	}
+	
+	public static function list_bulan($nm_var=''){
+		$html = '<select id="'.$nm_var.'" name="'.$nm_var.'" class="form-control">';
+		$html .= '<option value="0">Semua Bulan</option>';
+		
+		$no=1;
+        $bln='';
+        while ($no <= 12) {
+            if ($no==1) {$bln='Januari';
+            }else if ($no==2) {$bln='Februari';
+            }else if ($no==3) {$bln='Maret';
+            }else if ($no==4) {$bln='April';
+            }else if ($no==5) {$bln='Mei';
+            }else if ($no==6) {$bln='Juni';
+            }else if ($no==7) {$bln='Juli';
+            }else if ($no==8) {$bln='Agustus';
+            }else if ($no==9) {$bln='September';
+            }else if ($no==10) {$bln='Oktober';
+            }else if ($no==11) {$bln='November';
+            }else if ($no==12) {$bln='Desember';
+            }
+            $html .= '<option value='.$no.'>'.$bln.'</option>';
+            $no++;     
+        }
+		$html .= '</select>';
+		
+		return $html;
+	}
 
 	public static function list_supervisor($nm_var='', $selected=''){
 		
