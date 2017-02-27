@@ -3,7 +3,7 @@
 <script src="<?php echo asset('packages/tugumuda/js/BeatPicker.min.js'); ?>"></script>
 <section class="content-header">
     <h1>
-        Buat Log Aktivitas Baru<small></small>
+        Buat Log Aktivitas<small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{!!url()!!}"> Dashboard</a></li>

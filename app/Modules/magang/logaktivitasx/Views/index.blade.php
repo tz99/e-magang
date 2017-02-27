@@ -1,42 +1,27 @@
 <section class="content-header">
     <h1>
-        Laplogaktivitas<small></small>
+        Log Aktivitasx<small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{!!url()!!}"> Dashboard</a></li>
-        <li class="active">Laplogaktivitas</li>
+        <li class="active">Log Aktivitas</li>
     </ol>
 </section>
 <section class="content">
     <div class="box box-primary">
         <div class="box-header with-border">
-            {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!}
-            {!!csrf_field()!!}
-            <div class="col-sm-3">
-                <div class="form-group">
-                    <span style="font-weight:bold">Siswa</span>
-                    <div style="clear:both;margin-top:5px">
-                        {!! SiswamagangModel::list_nama_siswa('siswa') !!}
-                    </div>
+            {!! ClaravelHelpers::btnCreate() !!}
+            <div class="box-tools pull-right">
+                {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!}
+                {!!csrf_field()!!}
+                <div class="input-group" style="width: 300px;">
+                    <input type="text" class="form-control" name="search" value="{!! \Input::get('search')!!}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
+                    </span>
                 </div>
+                {!! Form::close() !!}
             </div>
-            <div class="col-sm-3" id="input_bulan">
-                <div class="form-group">
-                    <span style="font-weight:bold">Bulan</span>
-                    <div style="clear:both;margin-top:5px">
-                        {!! SupervisorModel::list_bulan('bulan') !!}
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-1" id="cari">
-                <div class="form-group">
-                    <span style="font-weight:bold">&nbsp</span>
-                    <div style="clear:both;margin-top:5px">
-                        <button class="btn btn-default cari" type="submit">Cari</button>
-                    </div>
-                </div>
-            </div>
-            {!! Form::close() !!}
         </div>
         {!! Form::open(array('url' => \Request::path().'/delete', 'method' => 'POST', 'class' => 'form-'.\Config::get('claravel::ajax'),'id'=>'data' )) !!}
         <div class="table-responsive">
@@ -44,29 +29,33 @@
                 <table class="table table-striped table-hover table-condensed table-bordered" id='tabel'>
                     <thead class="bg-primary">
                     <tr>
-                                     <th>Siswa</th>
-                    <th>Tanggal</th>
-                    <th>Aktivitas</th>
-                    <th>Verifikasi</th>
-                    <th>Verifikator</th>
-                    <th>Waktu verifikasi</th>
+                        <th><input type="checkbox" name="checkall" id="checkall" class="checkall" value="1" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Pilih Semua"></th>
+                        					<th>Siswa</th>
+					<th>Tanggal</th>
+					<th>Aktivitas</th>
+					<th>Verifikasi</th>
+					<th>Verifikator</th>
+					<th>Waktu verifikasi</th>
+
+                        <th>Act.</th>
                     </tr>
                     </thead>   
                     
                     <tbody>
-                    @foreach ($data as $logaktivitas)
+                    @foreach ($logaktivitass as $logaktivitas)
                     <tr>
+                        <td><center>{!! ClaravelHelpers::ckDelete($logaktivitas->id); !!}</center></td>
                         <td>{!! SiswamagangModel::get_nama_siswa($logaktivitas->siswa) !!}</td>
-                    <td><?php echo date('d F Y', strtotime($logaktivitas->tanggal)); ?></td>
-                    <td>{!!$logaktivitas->aktivitas!!}</td>
-                    <td><?php  
+					<td><?php echo date('d F Y', strtotime($logaktivitas->tanggal)); ?></td>
+					<td>{!!$logaktivitas->aktivitas!!}</td>
+					<td><?php  
                         if ($logaktivitas->verifikasi == 1){?>
                             <span class="label label-success" style="font-size:90%">Terverifikasi</span><?php
                         }else{?>
                             <span class="label label-danger" style="font-size:90%">Belum</span><?php
                         }?>
                     </td>
-                    <td>{!! SupervisorModel::get_supervisor($logaktivitas->verifikator) !!}
+					<td>{!! SupervisorModel::get_supervisor($logaktivitas->verifikator) !!}
                     </td>
                     <?php if ($logaktivitas->waktu_verifikasi == '0000-00-00 00:00:00') {
                             echo '<td align="center">-';
@@ -74,6 +63,10 @@
                             echo "<td>".date('d F Y (H:i)', strtotime($logaktivitas->waktu_verifikasi));
                         } ?></td>
                     <td>
+                    {!! ClaravelHelpers::btnEdit($logaktivitas->id) !!}
+                    &nbsp;
+                    {!! ClaravelHelpers::btnDelete($logaktivitas->id) !!}
+                    </td>
                     </tr>
                     @endforeach
                     </tbody>
@@ -86,7 +79,7 @@
               {!! ClaravelHelpers::btnDeleteAll() !!}
             </div>
             <div class="col-sm-6">
-            <?php //echo $laplogaktivitas->appends(array('siswa' => Input::get('siswa')))->render(); ?>
+              <?php echo $logaktivitass->appends(array('search' => Input::get('search')))->render(); ?>
             </div>
           </div>
         </div>
@@ -113,44 +106,6 @@
     }
     
     $(document).ready(function(){
-        $('select').select2();
-        
-        // $('#cari').on('submit',function(e){
-        //     var $this = $(this);
-        //     e.preventDefault();
-        //     // var siswa = document.getElementById('siswa').value;
-        //     // var bulan = document.getElementById('bulan').value;
-        //     alert('getSearch');
-        //     $.ajax({
-        //         url : 'laporan-laplogaktivitas-search',
-        //         type : 'GET',
-        //         data : $this.serialize(),
-        //         beforeSend: function(){
-        //             preloader.on();
-        //         },
-        //         success:function(html){
-        //             preloader.off();
-        //             $('#utama').html(html);
-        //         }
-        //     });
-        // });
-
-        $('#cari').on('submit',function(e){
-            e.preventDefault();
-            $.ajax({
-                url : $(this).attr('action'),
-                data:$(this).serialize(),
-                type : 'get',
-                beforeSend: function(){
-                    preloader.on();
-                },
-                success:function(html){
-                    preloader.off();
-                    $('#utama').html(html);
-                }
-            });
-        });
-
         $('.pagination').addClass('pagination-sm no-margin pull-right');
         $('.checkme,.checkall').on('change',function(){
             if($(this).is(':checked'))
@@ -193,7 +148,11 @@
                         },
                         success:function(html){
                             preloader.off();
-                            notification(html,'success');
+                            if (html=='9') {
+                                notification('Data berhasil dihapus','success');    
+                            }else{
+                                notification(html,'success');    
+                            }
                             $this.closest('tr').fadeOut(300,function(){
                                 $(this).remove();
                             });
@@ -251,7 +210,11 @@
                         },
                         success:function(html){
                             preloader.off();
-                            notification(html,'success');
+                            if (html=='9') {
+                                notification('Data berhasil dihapus','success');    
+                            }else{
+                                notification(html,'success');    
+                            }
                             iki.find('input[type=checkbox]').each(function (t){
                                 if($(this).is(':checked')){
                                     $(this).closest('tr').fadeOut(100)                                        

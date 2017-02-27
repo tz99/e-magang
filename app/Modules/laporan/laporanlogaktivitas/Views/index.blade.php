@@ -10,18 +10,33 @@
 <section class="content">
     <div class="box box-primary">
         <div class="box-header with-border">
-            {!! ClaravelHelpers::btnCreate() !!}
-            <div class="box-tools pull-right">
-                {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!}
+            {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!}
                 {!!csrf_field()!!}
-                <div class="input-group" style="width: 200px;">
-                    <input type="text" class="form-control" name="search" value="{!! \Input::get('search')!!}">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span> Search</button>
-                    </span>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <span style="font-weight:bold">Siswa</span>
+                        <div style="clear:both;margin-top:5px">
+                            {!! SiswamagangModel::list_nama_siswa('siswa') !!}
+                        </div>
+                    </div>
                 </div>
-                {!! Form::close() !!}
-            </div>
+                <div class="col-sm-3" id="input_bulan">
+                    <div class="form-group">
+                        <span style="font-weight:bold">Bulan</span>
+                        <div style="clear:both;margin-top:5px">
+                            {!! SupervisorModel::list_bulan('bulan') !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1" id="cari">
+                    <div class="form-group">
+                        <span style="font-weight:bold">&nbsp</span>
+                        <div style="clear:both;margin-top:5px">
+                            <button class="btn btn-default cari" type="submit">Cari</button>
+                        </div>
+                    </div>
+                </div>
+            {!! Form::close() !!}
         </div>
         {!! Form::open(array('url' => \Request::path().'/delete', 'method' => 'POST', 'class' => 'form-'.\Config::get('claravel::ajax'),'id'=>'data' )) !!}
         <div class="table-responsive">
@@ -39,7 +54,7 @@
                     </thead>   
                     
                     <tbody>
-                    @foreach ($data as $logaktivitas)
+                    @foreach ($laporanlogaktivitass as $logaktivitas)
                     <tr>
                         <td>{!! SiswamagangModel::get_nama_siswa($logaktivitas->siswa) !!}</td>
                     <td><?php echo date('d F Y', strtotime($logaktivitas->tanggal)); ?></td>
@@ -71,7 +86,7 @@
               {!! ClaravelHelpers::btnDeleteAll() !!}
             </div>
             <div class="col-sm-6">
-              <?php echo $laporanlogaktivitass->appends(array('search' => Input::get('search')))->render(); ?>
+              <?php //echo $laporanlogaktivitass->appends(array('search' => Input::get('search')))->render(); ?>
             </div>
           </div>
         </div>
@@ -98,6 +113,7 @@
     }
     
     $(document).ready(function(){
+        $('select').select2();
         $('.pagination').addClass('pagination-sm no-margin pull-right');
         $('.checkme,.checkall').on('change',function(){
             if($(this).is(':checked'))

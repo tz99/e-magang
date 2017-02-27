@@ -15,10 +15,10 @@ use Illuminate\Database\Eloquent\Model;
 class LaporanlogaktivitasModel extends Model {
 	protected $guarded = array();
 	
-	protected $table = "laporan_log_aktivitas";
+	protected $table = "lp_laporan_log_aktivitas";
 
 	public static $rules = array(
-    		'f' => 'required',
+    		'd' => 'required',
 
     );
 

@@ -1,11 +1,14 @@
+<!-- input type date -->
+<link rel="stylesheet" href="<?php echo asset('packages/tugumuda/css/BeatPicker.min.css'); ?>">
+<script src="<?php echo asset('packages/tugumuda/js/BeatPicker.min.js'); ?>"></script>
 <section class="content-header">
     <h1>
-        Buat Laporanlogaktivitas Baru<small></small>
+        Buat Log Aktivitas Baru<small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{!!url()!!}"> Dashboard</a></li>
-        <li><a href="#" id="back"> Laporanlogaktivitas</a></li>
-        <li class="active">Buat Laporanlogaktivitas Baru</li>
+        <li><a href="#" id="back"> Log Aktivitas</a></li>
+        <li class="active">Buat Log Aktivitas Baru</li>
     </ol>
 </section>
 <section class="content">
@@ -14,10 +17,45 @@
         <div class="col-md-12">
             {!! Form::open(array('url' => \Request::path(), 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax'),'id'=>'simpan')) !!}
             <div class="box-body">
-                				<div class="form-group">
-					{!! Form::label('f', 'f:', array('class' => 'col-sm-3 control-label')) !!}
+                <div class="form-group">
+					{!! Form::label('siswa', 'Siswa:', array('class' => 'col-sm-2 control-label')) !!}
 					<div class="col-sm-7">
-						{!! Form::text('f', null, array('class'=> 'form-control')) !!}
+                        {!! SiswamagangModel::list_nama_siswa('siswa') !!}
+					</div>
+				</div>
+				<div class="form-group">
+					{!! Form::label('tanggal', 'Tanggal:', array('class' => 'col-sm-2 control-label')) !!}
+					<div class="col-sm-7">
+                        {!! Form::text('tanggal', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
+					</div>
+				</div>
+				<div class="form-group">
+					{!! Form::label('aktivitas', 'Aktivitas:', array('class' => 'col-sm-2 control-label')) !!}
+					<div class="col-sm-7">
+						{!! Form::text('aktivitas', null, array('class'=> 'form-control')) !!}
+					</div>
+				</div>
+				<div class="form-group">
+					{!! Form::label('verifikasi', 'Verifikasi:', array('class' => 'col-sm-2 control-label')) !!}
+					<div class="col-sm-7" style="padding-top:8px">
+                        <input type="checkbox" name="verifikasi" value="1">
+					</div>
+				</div>
+				<div class="form-group">
+					{!! Form::label('verifikator', 'Verifikator:', array('class' => 'col-sm-2 control-label')) !!}
+					<div class="col-sm-7">
+                        {!! SupervisorModel::list_supervisor('verifikator') !!}
+					</div>
+				</div>
+				<div class="form-group">
+					{!! Form::label('waktu_verifikasi', 'Waktu verifikasi:', array('class' => 'col-sm-2 control-label')) !!}
+					<div class="col-sm-7">
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type='text' name="waktu_verifikasi" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
 					</div>
 				</div>
 
@@ -60,6 +98,8 @@
         }); 
     }
     $(document).ready(function(){
+        $('select').select2();
+        $('#datetimepicker1').datetimepicker();
         $('#batalkan,#back').on('click',function(e){
             e.preventDefault();
             refresh_page();

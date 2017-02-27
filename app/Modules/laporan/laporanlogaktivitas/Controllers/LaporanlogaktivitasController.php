@@ -3,7 +3,6 @@
 use App\Http\Controllers\Controller;
 use App\Modules\laporan\laporanlogaktivitas\Models\LaporanlogaktivitasModel;
 use Input,View, Request, Form, File;
-
 use DB;
 /**
 * Laporanlogaktivitas Controller
@@ -24,82 +23,24 @@ class LaporanlogaktivitasController extends Controller {
 
         public function getIndex(){
         cekAjax();
-        if (Input::has('search')) {
-            if(strlen(Input::has('search')) > 0){
-                $laporanlogaktivitass = $this->laporanlogaktivitas
-                			->orWhere('f', 'LIKE', '%'.Input::get('search').'%')
 
-                ->paginate($_ENV['configurations']['list-limit']);
+        if (Input::has('siswa')) {
+            $siswa = Input::get('siswa');
+            $bulan = Input::get('bulan');
+            if((strlen(Input::has('siswa')) > 0) and (strlen(Input::has('bulan')) == 0)){
+                $laporanlogaktivitass = DB::table('mg_log_aktivitas')
+                        ->orWhere('siswa', 'LIKE', '%'.$siswa.'%')
+                        ->paginate($_ENV['configurations']['list-limit']);
             }else{
-                $data = DB::table('mg_log_aktivitas')->get();
+                    // $laporanlogaktivitass = DB::table('mg_log_aktivitas')
+                    //     ->orWhere('siswa', 'LIKE', '%'.$siswa.'%')
+                    //     ->orWhere('siswa', 'LIKE', '%'.$siswa.'%')
+                    //     ->paginate($_ENV['configurations']['list-limit']);
             }
         }else{
-            $data = DB::table('mg_log_aktivitas')->get();
+                $laporanlogaktivitass = DB::table('mg_log_aktivitas')->get();
         }
-        return View::make('laporanlogaktivitas::index', compact('data'));
+
+        return View::make('laporanlogaktivitas::index', compact('laporanlogaktivitass'));
     }
-
-
-        public function getCreate(){
-        cekAjax();
-        return View::make('laporanlogaktivitas::create');
-    }
-
-    public function postCreate(){
-        cekAjax();
-        $input = Input::all();
-        $validation = \Validator::make($input, LaporanlogaktivitasModel::$rules);
-        if ($validation->passes()){
-            $input['user_id'] = \Session::get('user_id');
-            $input['role_id'] = \Session::get('role_id');
-            echo ($this->laporanlogaktivitas->create($input))?1:"Gagal Disimpan";
-        }
-        else{
-            echo 'Input tidak valid';
-        }
-    }
-
-
-
-    //{controller-show}
-
-        public function getEdit($id = false){
-        cekAjax();
-        $id = ($id == false)?Input::get('id'):'';
-        $laporanlogaktivitas = $this->laporanlogaktivitas->find($id);
-        //if (is_null($laporanlogaktivitas)){return \Redirect::to('laporan/laporanlogaktivitas/index');}
-        return View::make('laporanlogaktivitas::edit', compact('laporanlogaktivitas'));
-    }
-    
-    public function postEdit(){
-        cekAjax();
-        $id = Input::get('id');
-        $input = Input::all();
-        $validation = \Validator::make($input, LaporanlogaktivitasModel::$rules);
-        
-        if ($validation->passes()){
-            $laporanlogaktivitas = $this->laporanlogaktivitas->find($id);
-            echo ($laporanlogaktivitas->update($input))?4:"Gagal Disimpan";
-        }
-        else{
-            echo 'Input tidak valid';
-        }
-    }
-
-
-	
-        public function postDelete(){
-        cekAjax();
-        $ids = Input::get('id');
-        if (is_array($ids)){
-            foreach($ids as $id){
-                $this->laporanlogaktivitas->find($id)->delete();
-            }
-            echo 'Data berhasil dihapus';
-        }
-        else{
-            echo ($this->laporanlogaktivitas->find($ids)->delete())?9:0;
-        }
-    }
-
 }

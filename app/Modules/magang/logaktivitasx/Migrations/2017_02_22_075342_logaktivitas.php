@@ -4,8 +4,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
-* Laporanlogaktivitas Migration
-* @var Laporanlogaktivitas
+* Logaktivitas Migration
+* @var Logaktivitas
 * Generate from Custom Laravel 5.1 by Aa Gun. 
 *
 * Developed by Dinustek. 
@@ -13,7 +13,7 @@ use Illuminate\Database\Migrations\Migration;
 * Semarang, 2016
 */
 
-class Laporanlogaktivitas extends Migration {
+class Logaktivitas extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -22,9 +22,14 @@ class Laporanlogaktivitas extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('laporan_log_aktivitas', function(Blueprint $table) {
+		Schema::create('mg_log_aktivitas', function(Blueprint $table) {
 			$table->bigIncrements('id');
-			$table->string('f', 5);
+			$table->string('siswa', 100);
+			$table->dateTime('tanggal');
+			$table->string('aktivitas', 255);
+			$table->integer('verifikasi');
+			$table->string('verifikator', 100);
+			$table->dateTime('waktu_verifikasi');
 			$table->bigInteger('user_id');
 			$table->bigInteger('role_id');
 
@@ -40,7 +45,7 @@ class Laporanlogaktivitas extends Migration {
 	 */
 		public function down()
 	{
-		Schema::drop('laporan_log_aktivitas');
+		Schema::drop('mg_log_aktivitas');
 	}
 
 }
