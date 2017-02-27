@@ -1,10 +1,10 @@
 <section class="content-header">
     <h1>
-        Siswa Magang<small></small>
+        Tugas<small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{!!url()!!}"> Dashboard</a></li>
-        <li class="active">Siswa Magang</li>
+        <li class="active">Tugas</li>
     </ol>
 </section>
 <section class="content">
@@ -30,47 +30,40 @@
                     <thead class="bg-primary">
                     <tr>
                         <th><input type="checkbox" name="checkall" id="checkall" class="checkall" value="1" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Pilih Semua"></th>
-                    <th>Nomor Induk</th>
-					<th>Nama Siswa</th>
-					<th>Asal Sekolah</th>
-					<th>Jenjang Pendidikan</th>
-					<th>Alamat</th>
-					<th>Nomor Telepon</th>
-					<th>Email</th>
-					<th>Tanggal Mulai</th>
-					<th>Tanggal Selesai</th>
-					<th>Jenis Magang</th>
-					<th>Supervisior</th>
-                    <th>Foto</th>
+                        <th>Nama Siswa</th>
+    					<th>Project</th>
+    					<th>Tugas</th>
+    					<th>Deskripsi Tugas</th>
+    					<th>Tanggal Deadline</th>
+    					<th>Status Tugas</th>
+    					<th>Tanggal Selesai</th>
 
                         <th>Act.</th>
                     </tr>
                     </thead>   
                     
                     <tbody>
-                    @foreach ($siswamagangs as $siswamagang)
+                    @foreach ($tugass as $tugas)
                     <tr>
-                        <td><center>{!! ClaravelHelpers::ckDelete($siswamagang->id); !!}</center></td>
-                    <td>{!!$siswamagang->no_induk!!}</td>
-					<td>{!!$siswamagang->nm_siswa!!}</td>
-					<td>{!!$siswamagang->asal_sekolah!!}</td>
-                    <td>{!! SiswamagangModel::get_jenjang($siswamagang->jenjang_pddk) !!}</td>        
-					<td>{!!$siswamagang->alamat!!}</td>
-					<td>{!!$siswamagang->no_telp!!}</td>
-					<td>{!!$siswamagang->email!!}</td>
-					<td>{!!$siswamagang->tgl_mulai!!}</td>
-					<td>{!!$siswamagang->tgl_selesai!!}</td>
-					<td>{!! JenismagangModel::get_jenis_magang($siswamagang->nm_magang) !!}</td>
-					<td>{!! SupervisorModel::get_supervisor($siswamagang->nm_supervisior) !!}</td>
-
-                    <td>
-                        <img class="thumbnail" src="packages/upload/siswamagang/<?php echo $siswamagang->foto ?>" style="width:100px; height: 100px;"/>
-                    </td>
+                        <td><center>{!! ClaravelHelpers::ckDelete($tugas->id); !!}</center></td>
+                        <td>{!! SiswamagangModel::get_nama_siswa($tugas->nm_siswa) !!}</td>
+    					<td>{!! ProjectModel::get_project($tugas->nm_project) !!}</td>
+    					<td>{!!$tugas->tugas!!}</td>
+    					<td>{!!$tugas->deskripsi!!}</td>
+    					<td>{!!$tugas->tgl_deadline!!}</td>
+                        @if ($tugas->status == 1)
+                            <td><span class="label label-warning" style="font-size:90%">On Progress</span></td>
+                        @elseif ($tugas->status == 2)
+                            <td><span class="label label-success" style="font-size:90%">Finished</span></td>
+                        @elseif ($tugas->status == 3)
+                            <td><span class="label label-danger" style="font-size:90%">Revision</span></td>
+                        @endif
+    					<td>{!!$tugas->tgl_selesai!!}</td>
 
                         <td>
-                        {!! ClaravelHelpers::btnEdit($siswamagang->id) !!}
+                        {!! ClaravelHelpers::btnEdit($tugas->id) !!}
                         &nbsp;
-                        {!! ClaravelHelpers::btnDelete($siswamagang->id) !!}
+                        {!! ClaravelHelpers::btnDelete($tugas->id) !!}
                         </td>
                     </tr>
                     @endforeach
@@ -84,7 +77,7 @@
               {!! ClaravelHelpers::btnDeleteAll() !!}
             </div>
             <div class="col-sm-6">
-              <?php echo $siswamagangs->appends(array('search' => Input::get('search')))->render(); ?>
+              <?php echo $tugass->appends(array('search' => Input::get('search')))->render(); ?>
             </div>
           </div>
         </div>
@@ -215,7 +208,7 @@
                         },
                         success:function(html){
                             preloader.off();
-                             if(html=='9'){
+                            if(html=='9'){
                                 notification('Data Berhasil Dihapus','success');
                             }else{
                                 notification(html,'error');  

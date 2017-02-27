@@ -1,11 +1,13 @@
+<link rel="stylesheet" href="<?php echo asset('packages/tugumuda/css/BeatPicker.min.css'); ?>">
+<script src="<?php echo asset('packages/tugumuda/js/BeatPicker.min.js'); ?>"></script>
 <section class="content-header">
     <h1>
-        Edit Project<small></small>
+        Edit Tugas<small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{!!url()!!}"> Dashboard</a></li>
-        <li><a href="#" id="back"> Project</a></li>
-        <li class="active">Edit Project</li>
+        <li><a href="#" id="back"> Tugas</a></li>
+        <li class="active">Edit Tugas</li>
     </ol>
 </section>
 <section class="content">
@@ -16,27 +18,51 @@
     ?>
     <div class="row">
       <div class="col-md-12">
-        {!! Form::model($project, array('url' => $uri, 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax') ,'id'=>'simpan')) !!}
+        {!! Form::model($tugas, array('url' => $uri, 'method' => 'POST', 'class'=>'form-horizontal form-'.\Config::get('claravel::ajax') ,'id'=>'simpan')) !!}
         {!! Form::hidden('id') !!}
         <div class="box-body">
-        	<div class="form-group">
-				{!! Form::label('nm_project', 'Nama Project:', array('class' => 'col-sm-2 control-label')) !!}
-				<div class="col-sm-7">
-					{!! Form::text('nm_project', null, array('class'=> 'form-control')) !!}
+            	<div class="form-group">
+					{!! Form::label('nm_siswa', 'Nama Siswa:', array('class' => 'col-sm-2 control-label')) !!}
+					<div class="col-sm-7">
+                        {!! SiswamagangModel::list_nama_siswa('nm_siswa',$tugas->nm_siswa) !!}
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				{!! Form::label('deskripsi', 'Deskripsi :', array('class' => 'col-sm-2 control-label')) !!}
-				<div class="col-sm-7">
-					{!! Form::text('deskripsi', null, array('class'=> 'form-control')) !!}
+				<div class="form-group">
+					{!! Form::label('nm_project', 'Project:', array('class' => 'col-sm-2 control-label')) !!}
+					<div class="col-sm-7">
+						{!! ProjectModel::list_project('nm_project',$tugas->nm_project) !!}
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				{!! Form::label('status', 'Status:', array('class' => 'col-sm-2 control-label')) !!}
-				<div class="col-sm-7">
-					{!! ProjectModel::list_status('status',$project->status) !!}
+				<div class="form-group">
+					{!! Form::label('tugas', 'Tugas:', array('class' => 'col-sm-2 control-label')) !!}
+					<div class="col-sm-7">
+						{!! Form::text('tugas', null, array('class'=> 'form-control')) !!}
+					</div>
 				</div>
-			</div>
+				<div class="form-group">
+					{!! Form::label('deskripsi', 'Deskripsi Tugas:', array('class' => 'col-sm-2 control-label')) !!}
+					<div class="col-sm-7">
+						{!! Form::text('deskripsi', null, array('class'=> 'form-control')) !!}
+					</div>
+				</div>
+				<div class="form-group">
+					{!! Form::label('tgl_deadline', 'Tanggal Deadline:', array('class' => 'col-sm-2 control-label')) !!}
+					<div class="col-sm-7">
+						{!! Form::text('tgl_deadline', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
+					</div>
+				</div>
+				<div class="form-group">
+					{!! Form::label('status', 'Status Tugas:', array('class' => 'col-sm-2 control-label')) !!}
+					<div class="col-sm-7">
+						{!! TugasModel::list_status_tugas('status',$tugas->status) !!}
+					</div>
+				</div>
+				<div class="form-group">
+					{!! Form::label('tgl_selesai', 'Tanggal Selesai:', array('class' => 'col-sm-2 control-label')) !!}
+					<div class="col-sm-7">
+						{!! Form::text('tgl_selesai', null, array('class'=> 'form-control', 'data-beatpicker'=>'true', 'data-beatpicker-position'=>'["*","*"]')) !!}
+					</div>
+				</div>
 
         </div>
         <div class="box-footer">
@@ -78,6 +104,7 @@
              
     }
     $(document).ready(function(){
+        $('select').select2();
         $('#batalkan,#back').on('click',function(e){
             e.preventDefault();
             refresh_page();

@@ -1,6 +1,6 @@
 <?php namespace App\Modules\master\project\Models;
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 
 /**
 * Project Model
@@ -54,6 +54,29 @@ class ProjectModel extends Model {
 	  }
 
 	public static function get_status($id){
+		$data = DB::table('ms_project')
+					->where('id',  $id)
+		            ->first();
+
+		return ($data)?$data->status:'';
+	}
+
+	public static function list_project($nm_var='', $selected=''){
+		$data = DB::table('ms_project')
+		            ->get();
+		$html = '<select id="'.$nm_var.'" name="'.$nm_var.'" class="form-control">';
+		$html .= '<option value="">Daftar Project</option>';
+		$no=1;
+		foreach($data as $project){
+			$html .= '<option value='.$project->id.' '.(($selected==$project->id)?'selected':'').'>'.$project->nm_project.'</option>';
+			$no++;
+		}		
+		$html .= '</select>';
+		
+		return $html;
+	}
+
+	public static function get_project($id){
 		$data = DB::table('ms_project')
 					->where('id',  $id)
 		            ->first();
