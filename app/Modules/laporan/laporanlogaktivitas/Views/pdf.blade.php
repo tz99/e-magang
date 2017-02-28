@@ -1,13 +1,6 @@
 <?php
 
-/*if ($bulan!=0) {
-	$data = DB::select("select date_format(tanggal, '%d / %m / %Y') as tanggal, aktivitas, verifikasi, siswa from mg_log_aktivitas where siswa=$siswa and MONTH(tanggal)=$bulan ");	
-}*/
-//else{
-	$data = DB::select("select date_format(tanggal, '%d / %m / %Y') as tanggal, aktivitas, verifikasi, siswa from mg_log_aktivitas where siswa=$siswa ");
-	
-//}
-
+$data = DB::select("select date_format(tanggal, '%d / %m / %Y') as tanggal, aktivitas, verifikasi, siswa from mg_log_aktivitas where siswa=$siswa ");
 
 FPDF::AddPage();
 FPDF::SetFont('Arial','B',16);

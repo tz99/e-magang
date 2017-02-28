@@ -21,14 +21,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-sm-3" id="_bulan">
-                    <div class="form-group">
-                        <span style="font-weight:bold">Bulan</span>
-                        <div style="clear:both;margin-top:5px">
-                            {!! SupervisorModel::list_bulan('bulan') !!}
-                        </div>
-                    </div>
-                </div> -->
                 <div class="col-sm-2" id="_cari">
                     <div class="form-group">
                         <span style="font-weight:bold">&nbsp</span>
