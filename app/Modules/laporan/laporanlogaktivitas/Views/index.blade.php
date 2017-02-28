@@ -10,7 +10,8 @@
 <section class="content">
     <div class="box box-primary">
         <div class="box-header with-border">
-            {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!}
+            <!-- {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!} -->
+            {!! Form::open(array('url' => '/show_pdf', 'method' => 'GET','target'=>'blank' )) !!}
                 {!!csrf_field()!!}
                 <div class="col-sm-3">
                     <div class="form-group" id="_siswa">

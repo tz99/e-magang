@@ -45,4 +45,10 @@ class LaporanlogaktivitasController extends Controller {
 
         return View::make('laporanlogaktivitas::index', compact('laporanlogaktivitass','sts'));
     }
+
+    public function show_pdf(){
+        $siswa = Input::get('siswa');
+        $bulan = Input::get('bulan');
+        return View::make('laporanlogaktivitas::pdf', compact('siswa','bulan'));
+    }
 }
