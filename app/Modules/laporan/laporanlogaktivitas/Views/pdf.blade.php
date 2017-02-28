@@ -1,17 +1,12 @@
 <?php
 
-if ($bulan!=0) {
-	$data = DB::select("select date_format(tanggal, '%d / %m / %Y') as tanggal, aktivitas, verifikasi, siswa from mg_log_aktivitas where siswa=$siswa and MONTH(tanggal)=$bulan ");
-	/*$data = DB::table('mg_log_aktivitas')
-            ->Where('siswa', $siswa)
-            ->whereRaw('extract(month from tanggal) = ?', [$bulan])
-            ->get();	*/
-}else{
+/*if ($bulan!=0) {
+	$data = DB::select("select date_format(tanggal, '%d / %m / %Y') as tanggal, aktivitas, verifikasi, siswa from mg_log_aktivitas where siswa=$siswa and MONTH(tanggal)=$bulan ");	
+}*/
+//else{
 	$data = DB::select("select date_format(tanggal, '%d / %m / %Y') as tanggal, aktivitas, verifikasi, siswa from mg_log_aktivitas where siswa=$siswa ");
-	/*$data = DB::table('mg_log_aktivitas')
-            ->Where('siswa', $siswa)
-            ->get();*/
-}
+	
+//}
 
 
 FPDF::AddPage();
@@ -56,7 +51,7 @@ FPDF::Ln(7);
 foreach ($data as $key => $log) {
 	FPDF::Cell(10,7,$key+1,1,0,'C');
 	FPDF::Cell(35,7,$log->tanggal,1,0,'C');
-	FPDF::Cell(110,7,$log->aktivitas,1,0,'C');
+	FPDF::Cell(110,7," ".$log->aktivitas,1,0,'L');
 	if ($log->verifikasi == 1) {
 		FPDF::Cell(35,7,'Terverifikasi',1,0,'C');
 	}else{

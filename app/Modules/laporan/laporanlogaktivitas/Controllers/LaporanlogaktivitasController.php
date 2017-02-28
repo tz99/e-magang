@@ -27,17 +27,18 @@ class LaporanlogaktivitasController extends Controller {
         if (Input::has('siswa')) {
             $sts=1;
             $siswa = Input::get('siswa');
-            $bulan = Input::get('bulan');
+            // $bulan = Input::get('bulan');
             if((strlen(Input::has('siswa')) > 0) and ($bulan == 0)){
                 $laporanlogaktivitass = DB::table('mg_log_aktivitas')
                         ->Where('siswa',  $siswa)
                         ->paginate($_ENV['configurations']['list-limit']);
-            }else{
+            }
+            /*else{
                     $laporanlogaktivitass = DB::table('mg_log_aktivitas')
                         ->Where('siswa', $siswa)
                         ->whereRaw('extract(month from tanggal) = ?', [$bulan])
                         ->paginate($_ENV['configurations']['list-limit']);
-            }
+            }*/
         }else{
             $sts=0;
             $laporanlogaktivitass = DB::table('mg_log_aktivitas')->get();
@@ -48,7 +49,7 @@ class LaporanlogaktivitasController extends Controller {
 
     public function show_pdf(){
         $siswa = Input::get('siswa');
-        $bulan = Input::get('bulan');
-        return View::make('laporanlogaktivitas::pdf', compact('siswa','bulan'));
+        //$bulan = Input::get('bulan');
+        return View::make('laporanlogaktivitas::pdf', compact('siswa'));
     }
 }
