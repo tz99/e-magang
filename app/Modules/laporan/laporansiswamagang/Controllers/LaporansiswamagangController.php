@@ -115,7 +115,13 @@ class LaporansiswamagangController extends Controller {
         return View::make('laporansiswamagang::index', compact('laporansiswamagangs','act'));
     }
 
-
+    public function cetak_pdf(){
+        $jenis = Input::get('jenis_magang');
+        $jenjang = Input::get('jenjang_pddk');
+        $bulanml = Input::get('bulan_mulai');
+        $bulansl = Input::get('bulan_selesai');
+        return View::make('laporansiswamagang::cetaklaporan', compact('jenis','jenjang','bulanml','bulansl'));
+    }
     
 
     //{controller-show}

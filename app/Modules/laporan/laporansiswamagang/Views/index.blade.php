@@ -11,7 +11,9 @@
     <div class="box box-primary">
         <!-- Filter Pencarian -->
         <div class="box-header with-border">
-            {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!}
+            <!-- {!! Form::open(array('url' => \Request::path(), 'method' => 'GET', 'class' => 'form-'.\Config::get('claravel::ajax'),'id' => 'cari' )) !!} -->
+            {!! Form::open(array('url' => '/cetak_pdf', 'method' => 'GET','target'=>'blank' )) !!}
+            {!!csrf_field()!!}
             <div class="table-responsive">
                 <div class="box-body no-padding">
                     <div class="col-sm-3">
@@ -50,7 +52,7 @@
                         <div class="form-group">
                             <span style="font-weight:bold">&nbsp</span>
                             <div style="clear:both;margin-top:5px">
-                                <button class="btn btn-default type="submit">Show</button>
+                                <button class="btn btn-default type="submit"><span class="glyphicon glyphicon-print"></span>Cetak</button>
                             </div>
                         </div>
                     </div>
@@ -67,9 +69,8 @@
                     <thead class="bg-primary">
                     <tr>
                         <th>Nama Siswa</th>
-                        <th>Nomor Induk</th>
                         <th>Asal Sekolah</th>
-                        <th>Jenjang Pendidikan</th>
+                        <th>Pendidikan</th>
                         <th>Jenis Magang</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Selesai</th>
@@ -80,7 +81,6 @@
                     @foreach ($laporansiswamagangs as $laporansiswamagang)
                     <tr>                        
                         <td>{!!$laporansiswamagang->nm_siswa!!}</td>
-                        <td>{!!$laporansiswamagang->no_induk!!}</td>
                         <td>{!!$laporansiswamagang->asal_sekolah!!}</td>
                         <td>{!! SiswamagangModel::get_jenjang($laporansiswamagang->jenjang_pddk) !!}</td>
                         <td>{!! JenismagangModel::get_jenis_magang($laporansiswamagang->nm_magang) !!}</td>
