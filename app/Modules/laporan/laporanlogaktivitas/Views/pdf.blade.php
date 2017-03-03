@@ -11,7 +11,7 @@ FPDF::ln(25);
 $alamat = "Jl. Arjuna No. 36 Semarang 50131, Indonesia";
 $kontak = "Tel. (024) 3568492 Fax. (024) 3568490 Email: marketing@dinustech.com";
 FPDF::Cell(0,0,$alamat,'0','1','C',false);
-FPDF::ln(6);
+FPDF::ln(5);
 FPDF::Cell(0,0,$kontak,'0','1','C',false);
 FPDF::SetFont('Arial','B',14);
 FPDF::ln(4);
@@ -34,11 +34,11 @@ FPDF::SetFont('Arial','',10);
 FPDF::Cell(22,0,'Nama','0','1','L',false);
 FPDF::Cell(30,0,' : ',0,0,'R');
 FPDF::Cell(100,0,$siswa,0,0,':');
-FPDF::Ln(6);
+FPDF::Ln(5);
 FPDF::Cell(22,0,'Asal Sekolah','0','1','L',false);
 FPDF::Cell(30,0,' : ',0,0,'R');
 FPDF::Cell(100,0,$asal_sekolah,0,0,':');
-FPDF::Ln(6);
+FPDF::Ln(5);
 FPDF::Cell(22,0,'Jurusan','0','1','L',false);
 FPDF::Cell(30,0,' : ',0,0,'R');
 FPDF::Cell(100,0,$jenis_magang,0,0,':');
@@ -51,18 +51,13 @@ FPDF::Cell(35,7,'Status',1,0,'C');
 FPDF::Ln(7);
 
 foreach ($data as $key => $log) {
-	FPDF::Cell(10,7,$key+1,1,0,'C');
-	FPDF::Cell(35,7,$log->tanggal,1,0,'C');
-	FPDF::Cell(110,7," ".$log->aktivitas,1,0,'L');
 	if ($log->verifikasi == 1) {
-		FPDF::Cell(35,7,'Terverifikasi',1,0,'C');
+		$status='terverifikasi';
 	}else{
-		FPDF::Cell(35,7,'-',1,0,'C');
+		$status='-';
 	}
-	FPDF::Ln(7);
+	FPDF::set_cell(10,35,110,35,7,$key+1,'C',$log->tanggal,'C',$log->aktivitas,'L',$status,'C');
 }
-
-
 
 FPDF::Output();
 exit;
