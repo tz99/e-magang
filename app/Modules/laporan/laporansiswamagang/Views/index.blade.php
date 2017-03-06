@@ -16,7 +16,7 @@
             {!!csrf_field()!!}
             <div class="table-responsive">
                 <div class="box-body no-padding">
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" id="jns">
                         <div class="form-group">
                             <span style="font-weight:bold">Jenis Magang</span>
                             <div style="clear:both;margin-top:5px">
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" id="jjg">
                         <div class="form-group" >
                             <span style="font-weight:bold">Jenjang Pendidikan</span>
                             <div style="clear:both;margin-top:5px">
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" id="mulai">
                         <div class="form-group" >
                             <span style="font-weight:bold">Bulan Mulai Magang</span>
                             <div style="clear:both;margin-top:5px">
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" id="selesai">
                         <div class="form-group" >
                             <span style="font-weight:bold">Bulan Selesai Magang</span>
                             <div style="clear:both;margin-top:5px">
@@ -48,11 +48,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-2" >
+                    <div class="col-sm-2" id="cetak" >
                         <div class="form-group">
                             <span style="font-weight:bold">&nbsp</span>
                             <div style="clear:both;margin-top:5px">
-                                <button class="btn btn-default type="submit"><span class="glyphicon glyphicon-print"></span>Cetak</button>
+                                <button class="btn btn-default print" type="submit"><span class="glyphicon glyphicon-print"></span>Cetak</button>
                             </div>
                         </div>
                     </div>
@@ -128,6 +128,22 @@
     }
     
     $(document).ready(function(){
+        $('#cetak').hide();
+        $('#jns').on('change',function(e){
+            $('#cetak').fadeIn();
+        })
+        $('#jjg').on('change',function(e){
+            $('#cetak').fadeIn();
+        })
+        $('#mulai').on('change',function(e){
+            $('#cetak').fadeIn();
+        })
+        $('#selesai').on('change',function(e){
+            $('#cetak').fadeIn();
+        })
+        $('.print').on('click',function(e){
+            $('#cetak').hide();
+        })
         $('.pagination').addClass('pagination-sm no-margin pull-right');
         $('.checkme,.checkall').on('change',function(){
             if($(this).is(':checked'))

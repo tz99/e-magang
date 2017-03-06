@@ -12,7 +12,7 @@
                 $laporansiswamagang = DB::table('ms_siswa_magang')
                         ->Where('nm_magang',  $jenis)
                         ->Where('jenjang_pddk',  $jenjang)
-                        ->whereRaw('extract(month from tgl_mulai) = ?', [$$bulanml])
+                        ->whereRaw('extract(month from tgl_mulai) = ?', [$bulanml])
                         ->paginate($_ENV['configurations']['list-limit']);  
 
             }else if((strlen($jenis) > 0) && (strlen($jenjang) > 0 ) && ($bulansl > 0)){
@@ -31,7 +31,7 @@
             }else if((strlen($jenis) > 0) && ($bulanml > 0)){
                 $laporansiswamagang = DB::table('ms_siswa_magang')
                         ->Where('nm_magang',  $jenis)
-                        ->whereRaw('extract(month from tgl_mulai) = ?', [$$bulanml])
+                        ->whereRaw('extract(month from tgl_mulai) = ?', [$bulanml])
                         ->paginate($_ENV['configurations']['list-limit']);    
 
             }else if((strlen($jenis) > 0) && ($bulansl > 0)){
@@ -43,7 +43,7 @@
             }else if((strlen($jenjang) > 0) && ($bulanml > 0)){
                 $laporansiswamagang = DB::table('ms_siswa_magang')
                         ->Where('jenjang_pddk',  $jenjang)
-                        ->whereRaw('extract(month from tgl_mulai) = ?', [$$bulanml])
+                        ->whereRaw('extract(month from tgl_mulai) = ?', [$bulanml])
                         ->paginate($_ENV['configurations']['list-limit']); 
 
             }else if((strlen($jenjang) > 0) && ($bulansl > 0)){
@@ -64,7 +64,7 @@
 
             }else if(strlen($bulanml) > 0){
                 $laporansiswamagang = DB::table('ms_siswa_magang')
-                        ->whereRaw('extract(month from tgl_mulai) = ?', [$$bulanml])
+                        ->whereRaw('extract(month from tgl_mulai) = ?', [$bulanml])
                         ->paginate($_ENV['configurations']['list-limit']);                        
             }else if(strlen($bulansl) > 0){
                 $laporansiswamagang = DB::table('ms_siswa_magang')
@@ -95,17 +95,21 @@ FPDF::Cell(36,9,'Tanggal Mulai',1,0,'C');
 FPDF::Cell(36,9,'Tanggal Selesai',1,1,'C');
 FPDF::SetFont('Arial','',10);
 
-foreach ($laporansiswamagang as $key => $log) {
-	$jjg=  SiswamagangModel::get_jenjang($log->jenjang_pddk);
-	$jns=  JenismagangModel::get_jenis_magang($log->nm_magang);
-	FPDF::Cell(7.5, 6, $key+1, 1, 0, 'C');	
-	FPDF::Cell(45, 6, $log->nm_siswa, 1, 0, 'L');
-	FPDF::Cell(54, 6, $log->asal_sekolah, 1, 0, 'C');
-	FPDF::Cell(28, 6, $jjg, 1, 0, 'C');
-	FPDF::Cell(34, 6, $jns, 1, 0, 'C');
-	FPDF::Cell(36, 6, date('d F Y', strtotime($log->tgl_mulai)), 1, 0, 'C');
-	FPDF::Cell(36, 6, date('d F Y', strtotime($log->tgl_selesai)), 1, 1, 'C');
+if (is_null($laporansiswamagang ) == true) {
+    foreach ($laporansiswamagang as $key => $log) {
+    	$jjg=  SiswamagangModel::get_jenjang($log->jenjang_pddk);
+    	$jns=  JenismagangModel::get_jenis_magang($log->nm_magang);
+    	FPDF::Cell(7.5, 6, $key+1, 1, 0, 'C');	
+    	FPDF::Cell(45, 6, $log->nm_siswa, 1, 0, 'L');
+    	FPDF::Cell(54, 6, $log->asal_sekolah, 1, 0, 'C');
+    	FPDF::Cell(28, 6, $jjg, 1, 0, 'C');
+    	FPDF::Cell(34, 6, $jns, 1, 0, 'C');
+    	FPDF::Cell(36, 6, date('d F Y', strtotime($log->tgl_mulai)), 1, 0, 'C');
+    	FPDF::Cell(36, 6, date('d F Y', strtotime($log->tgl_selesai)), 1, 1, 'C');
+    }
+} else {
+FPDF::SetFont('Arial','B',16);
+FPDF::Cell(240.5,15,'Data Kosong',1,0,'C');
 }
-
 FPDF::Output();
 exit;
