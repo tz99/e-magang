@@ -1,6 +1,6 @@
 <?php
 
-$data = DB::select("select date_format(tanggal, '%d / %m / %Y') as tanggal, aktivitas, verifikasi, siswa from mg_log_aktivitas where siswa=$siswa ");
+$data = DB::select("select date_format(tanggal, '%d / %m / %Y') as tanggal, aktivitas, verifikasi, siswa from mg_log_aktivitas where siswa= $siswa ");
 
 FPDF::AddPage();
 FPDF::SetFont('Arial','',10);
@@ -16,17 +16,11 @@ FPDF::Cell(0,0,$kontak,'0','1','C',false);
 FPDF::SetFont('Arial','B',14);
 FPDF::ln(4);
 
-$id_siswa = DB::table('ms_siswa_magang')
-            ->Where('id', $siswa)
-            ->first();
-
-$id_magang = DB::table('ms_jenis_magang')
-            ->Where('id', $id_siswa->nm_magang)
-            ->first();
+$id_siswa = DB::table('ms_siswa_magang')->Where('id', $siswa)->first();
 
 $siswa 			= $id_siswa->nm_siswa;
 $asal_sekolah 	= $id_siswa->asal_sekolah;
-$jenis_magang 	= $id_magang->nama;
+$jenis_magang 	= JenismagangModel::get_jenis_magang($id_siswa->nm_magang);
 
 FPDF::Ln(15);
 
