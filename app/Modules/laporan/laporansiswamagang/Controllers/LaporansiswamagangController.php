@@ -26,7 +26,7 @@ class LaporansiswamagangController extends Controller {
         cekAjax();
         if (Input::has('jenis_magang') || Input::has('jenjang_pddk') || Input::has('bulan_mulai') || Input::has('bulan_selesai')) {
 
-                        $act=1;
+            $act=1;
             $jenis = Input::get('jenis_magang');
             $jenjang = Input::get('jenjang_pddk');
             $bulanml = Input::get('bulan_mulai');
