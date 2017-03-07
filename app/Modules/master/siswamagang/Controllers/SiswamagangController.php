@@ -28,17 +28,17 @@ class SiswamagangController extends Controller {
         if (Input::has('search')) {
             if(strlen(Input::has('search')) > 0){
                 $siswamagangs = $this->siswamagang
-                			->orWhere('no_induk', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('nm_siswa', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('asal_sekolah', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('jenjang_pddk', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('alamat', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('no_telp', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('email', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('tgl_mulai', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('tgl_selesai', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('nm_magang', 'LIKE', '%'.Input::get('search').'%')
-			->orWhere('nm_supervisior', 'LIKE', '%'.Input::get('search').'%')
+                ->orWhere('no_induk', 'LIKE', '%'.Input::get('search').'%')
+    			->orWhere('nm_siswa', 'LIKE', '%'.Input::get('search').'%')
+    			->orWhere('asal_sekolah', 'LIKE', '%'.Input::get('search').'%')
+    			->orWhere('jenjang_pddk', 'LIKE', '%'.Input::get('search').'%')
+    			->orWhere('alamat', 'LIKE', '%'.Input::get('search').'%')
+    			->orWhere('no_telp', 'LIKE', '%'.Input::get('search').'%')
+    			->orWhere('email', 'LIKE', '%'.Input::get('search').'%')
+    			->orWhere('tgl_mulai', 'LIKE', '%'.Input::get('search').'%')
+    			->orWhere('tgl_selesai', 'LIKE', '%'.Input::get('search').'%')
+    			->orWhere('nm_magang', 'LIKE', '%'.Input::get('search').'%')
+    			->orWhere('nm_supervisior', 'LIKE', '%'.Input::get('search').'%')
 
                 ->paginate($_ENV['configurations']['list-limit']);
             }else{
@@ -162,8 +162,7 @@ class SiswamagangController extends Controller {
             'email' => Input::get('email'),
             'tgl_mulai' => Input::get('tgl_mulai'),
             'tgl_selesai' => Input::get('tgl_selesai'),
-            'nm_magang' => Input::get('nm_magang'),
-            'nm_supervisior' => Input::get('nm_supervisior')
+            'nm_magang' => Input::get('nm_magang')
         );
         
         $image = Input::get('foto');

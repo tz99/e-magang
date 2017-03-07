@@ -77,12 +77,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('nm_supervisior', 'Supervisior:', array('class' => 'col-sm-2 control-label')) !!}
-                    <div class="col-sm-7">
-                        {!! SupervisorModel::list_supervisor('nm_supervisior') !!}
-                    </div>
-                </div>
-                <div class="form-group">
                     {!! Form::label('username', 'Username:', array('class' => 'col-sm-2 control-label')) !!}
                     <div class="col-sm-7">
                         {!! Form::text('username', null, array('class'=> 'form-control')) !!}

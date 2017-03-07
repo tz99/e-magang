@@ -85,12 +85,6 @@
 						{!! JenismagangModel::list_jenis_magang('nm_magang',$siswamagang->nm_magang) !!}
 					</div>
 				</div>
-				<div class="form-group">
-					{!! Form::label('nm_supervisior', 'Supervisior:', array('class' => 'col-sm-3 control-label')) !!}
-					<div class="col-sm-7">
-						 {!! SupervisorModel::list_supervisor('nm_supervisior',$siswamagang->nm_supervisior) !!}
-					</div>
-				</div>
                 <div class="form-group">
                     {!! Form::label('username', 'Username:', array('class' => 'col-sm-3 control-label')) !!}
                     <div class="col-sm-7">
