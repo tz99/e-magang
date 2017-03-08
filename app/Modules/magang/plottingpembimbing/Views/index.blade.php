@@ -23,6 +23,7 @@
                 {!! Form::close() !!}
             </div>
         </div>
+        <br/><br>
         {!! Form::open(array('url' => \Request::path().'/delete', 'method' => 'POST', 'class' => 'form-'.\Config::get('claravel::ajax'),'id'=>'data' )) !!}
         <div class="table-responsive">
             <div class="box-body no-padding">
